@@ -5,6 +5,57 @@
 ## F.R.I.D.A.Y - Functional Responsive Intelligent Digital Assistant for You ##
 The F.R.I.D.A.Y. repository is an open-source project that provides a Functional Responsive Intelligent Digital Assistant for You. It is designed to serve as a personal assistant, integrating various APIs to make your linux box smarter with the power of ai, automation and voice interaction. 
 
+🚀 Installation
+
+Follow these steps to install F.R.I.D.A.Y. on your Linux system:
+1. Clone the Repository
+
+git clone https://github.com/B3ND1X/F.R.I.D.A.Y.git
+cd F.R.I.D.A.Y
+
+2. Ensure You Have Your Google Credentials
+
+Before proceeding, you'll need a credentials.json file from your Google Cloud Console:
+
+    Visit Google Cloud Console
+
+    Create a new project (or select an existing one)
+
+    Enable Gmail API and Google Calendar API
+
+    Create OAuth 2.0 Client ID for "Desktop App"
+
+    Download the JSON and rename it to credentials.json
+
+    Place it in the root directory of this project
+
+3. Run the Installer Script
+
+Run the following command as root (using sudo) to install all required dependencies:
+
+sudo ./install.sh
+
+This script will:
+
+    Check for system requirements
+
+    Install Node.js, npm, and system tools
+
+    Install required npm packages (e.g., Express, Axios, Google APIs)
+
+    Prompt for your API keys (Groq, Weather, News, TMDB, Spotify)
+
+    Set up permissions and configuration
+
+4. Launch the Assistant
+
+After installation, you can start the assistant with:
+
+./start.sh start or ./run.sh (non sudo) 
+
+Then visit http://localhost:3000 in your browser to begin using F.R.I.D.A.Y.
+
+
 ### 🗣️🎙️ **VOICE COMMANDS:** ###
 ## All voice commands require a wake word to trigger. The assistant starts listening when you say "Hey Friday." ##
 ---
@@ -247,11 +298,3 @@ NLP integrated so you can just talk to it naturally.
 
 **PLEASE NOTE FOR ALL SYSTEM RELATED COMMANDS REQUIRE A BACKEND SERVER RUNNING LOCALLY**
 This would mean stuff like changing volume, rebooting, etc. Anything that needs access to your device or system would need to have a node server backend running local!!
-
-### 🤖 **How To Install **
-1. Clone the repo or download just the .zip file
-2. Unzip the the file
-3. sudo chmod +x install.sh
-4. sudo ./install.sh
----
-
