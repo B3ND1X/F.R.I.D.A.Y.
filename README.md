@@ -4,8 +4,6 @@
 
 ## F.R.I.D.A.Y - Functional Responsive Intelligent Digital Assistant for You ##
 
-[Click here to visit F.R.I.D.A.Y](https://b3nd1x.github.io/F.R.I.D.A.Y./)
-Please note this is an example of now it looks rather than a full demo there are no apis or anything set up here. 
 
 ### 🗣️🎙️ **VOICE COMMANDS:** ###
 ## All voice commands require a wake word to trigger. The assistant starts listening when you say "Hey Friday." ##
