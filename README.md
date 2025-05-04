@@ -37,11 +37,6 @@ Works on older machines — no GPU or local LLM needed. Can run on Raspberry Pi 
 	•	Privacy-First
 Only language parsing touches the cloud. All execution and sensitive data handling remains local.
 
-⸻
-
-Why It’s Different
-
-Unlike typical AI assistants tied to Big Tech, F.R.I.D.A.Y. gives you real ownership, customization, and offline power. It’s designed for hackers, makers, and privacy advocates who want a voice assistant that actually works — without spying on them or eating system resources.
 
 ⸻
 
