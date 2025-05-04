@@ -64,7 +64,8 @@ or
 *as non sudo user**
 
 Then visit http://localhost:3000 in your browser to begin using F.R.I.D.A.Y.
-*For best results use chrome* 
+
+*For best results use chrome, other browsers like brave or firefox seem to either block the mic or STT* 
 
 ### 🗣️🎙️ **VOICE COMMANDS:** ###
 ## All voice commands require a wake word to trigger. The assistant starts listening when you say "Hey Friday." ##
