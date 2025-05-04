@@ -80,13 +80,10 @@ F.R.I.D.A.Y. (Functional Responsive Intelligent Digital Assistant for You) is a 
 🚀 Installation
 
 Follow these steps to install F.R.I.D.A.Y. on your Linux system:
-1. Clone the Repository
+1. Download release file
 
-git clone https://github.com/B3ND1X/F.R.I.D.A.Y./
-
-cd F.R.I.D.A.Y.
-
-(Or download the zip https://github.com/B3ND1X/F.R.I.D.A.Y./raw/refs/heads/main/F.R.I.D.A.Y..zip)
+Download the latest release: https://github.com/B3ND1X/F.R.I.D.A.Y./releases
+and unzip the file. 
 
 2. Ensure You Have Your Google Credentials
 
@@ -107,7 +104,7 @@ Before proceeding, you'll need a credentials.json file from your Google Cloud Co
 3. Run the Installer Script
 
 Run the following command as root (using sudo) to install all required dependencies:
-
+sudo chmod +x install.sh 
 
 sudo ./install.sh
 
