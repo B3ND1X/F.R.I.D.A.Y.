@@ -383,3 +383,35 @@ NLP integrated so you can just talk to it naturally.
 
 **PLEASE NOTE FOR ALL SYSTEM RELATED COMMANDS REQUIRE A BACKEND SERVER RUNNING LOCALLY**
 This would mean stuff like changing volume, rebooting, etc. Anything that needs access to your device or system would need to have a node server backend running local!!
+
+
+### 🔐 **Privacy and Data**
+
+⸻
+
+Privacy Disclosure
+
+This project includes voice interaction features using the Web Speech API, which enables speech recognition and speech synthesis in supported browsers.
+
+Features Used
+	•	Speech Synthesis (TTS): Converts text into spoken voice output using your device’s built-in speech engine.
+	•	Speech Recognition (STT): Converts spoken input into text for interaction.
+
+Data Handling and Privacy
+	•	No voice data is collected, stored, or transmitted by this application.
+	•	Microphone access is only initiated with your explicit permission via your browser.
+	•	Speech Synthesis is processed locally on your device using system-provided voices.
+	•	Speech Recognition may be processed either locally or by third-party servers, depending on your browser:
+	•	In Safari, STT may use Apple servers.
+	•	In Chrome, STT typically uses Google’s cloud services.
+	•	Some browsers (e.g., WebKitGTK) may support fully local recognition.
+
+Please refer to your browser’s privacy policy for further information on how voice data is handled during speech recognition:
+	•	Apple Privacy Policy
+	•	Google Privacy Policy
+
+If you are concerned about speech data being transmitted to third parties, we recommend using a browser that supports local speech recognition.
+
+⸻
+
+Would you like a version with badges or collapsible sections for better readability in GitHub?
