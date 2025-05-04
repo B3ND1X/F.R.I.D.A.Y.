@@ -33,9 +33,9 @@ Before proceeding, you'll need a credentials.json file from your Google Cloud Co
 
 Run the following command as root (using sudo) to install all required dependencies:
 
-<bash>
+```bash
 sudo ./install.sh
-</bash>
+
 
 This script will:
 
@@ -52,13 +52,13 @@ This script will:
 4. Launch the Assistant
 
 After installation, you can start the assistant with:
-<bash>
-./start.sh start
-</bash>
+```bash
+./start.sh start| stop | debug
+
 
 or 
-
-<bash> ./run.sh </bash>
+```bash
+ ./run.sh
 
 *as non sudo user**
 
