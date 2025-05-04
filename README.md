@@ -10,7 +10,8 @@ The F.R.I.D.A.Y. repository is an open-source project that provides a Functional
 Follow these steps to install F.R.I.D.A.Y. on your Linux system:
 1. Clone the Repository
 
-git clone https://github.com/B3ND1X/F.R.I.D.A.Y.git
+git clone https://github.com/B3ND1X/F.R.I.D.A.Y.
+
 cd F.R.I.D.A.Y
 
 2. Ensure You Have Your Google Credentials
