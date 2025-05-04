@@ -437,3 +437,9 @@ https://www.mozilla.org/en-US/privacy/
 https://privacy.microsoft.com/en-us/privacystatement
  • Groq AI Privacy
 https://groq.com/privacy-policy/
+
+### Contribute 
+
+F.R.I.D.A.Y. showcases an ambitious attempt to bring a voice-activated assistant to Linux systems. While the groundwork is laid, further development, detailed documentation, and community involvement would be beneficial to realize its full potential.
+
+For those interested in AI assistants or Linux automation, this project offers a starting point, but be prepared to delve into the code and possibly contribute to its evolution.
