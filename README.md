@@ -410,8 +410,30 @@ Please refer to your browser’s privacy policy for further information on how v
 	•	Apple Privacy Policy
 	•	Google Privacy Policy
 
-If you are concerned about speech data being transmitted to third parties, we recommend using a browser that supports local speech recognition.
+### Groq AI Usage
+
+This project utilizes Groq AI for language processing tasks (e.g., speech-to-text or text analysis).
+
+- **No user data is stored or logged** by this application.
+- All communication with Groq services is subject to Groq Inc.'s data handling policies.
+- To learn more, please refer to the [Groq Privacy Policy](https://groq.com/privacy-policy).
+
+Note: If you are using a third-party wrapper or API provider that runs on Groq hardware, please review their respective privacy terms as well.
+
+If you are concerned about speech data being transmitted to third parties, we recommend using a browser that supports local speech recognition and or modifying the code to use a local LLM. 
 
 ⸻
 
-Would you like a version with badges or collapsible sections for better readability in GitHub?
+Here are direct links to the official privacy policies:
+
+Browser Privacy Policies
+	•	Apple (Safari on macOS and iOS)
+https://www.apple.com/legal/privacy/en-ww/
+	•	Google (Chrome, Chromium-based browsers)
+https://policies.google.com/privacy
+	•	Mozilla Firefox (Note: Firefox does not currently implement the SpeechRecognition API)
+https://www.mozilla.org/en-US/privacy/
+	•	Microsoft Edge (based on Chromium)
+https://privacy.microsoft.com/en-us/privacystatement
+ • Groq AI Privacy
+https://groq.com/privacy-policy/
