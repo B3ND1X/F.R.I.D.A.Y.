@@ -3,7 +3,7 @@
 </p>
 
 ## F.R.I.D.A.Y - Functional Responsive Intelligent Digital Assistant for You ##
-
+The F.R.I.D.A.Y. repository is an open-source project that provides a Functional Responsive Intelligent Digital Assistant for You. It is designed to serve as a personal assistant, integrating various APIs to make your linux box smarter with the power of ai, automation and voice interaction. 
 
 ### 🗣️🎙️ **VOICE COMMANDS:** ###
 ## All voice commands require a wake word to trigger. The assistant starts listening when you say "Hey Friday." ##
