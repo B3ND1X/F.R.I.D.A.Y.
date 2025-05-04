@@ -61,11 +61,11 @@ F.R.I.D.A.Y. (Functional Responsive Intelligent Digital Assistant for You) is a 
 🔧 Architecture & Components
 	•	Voice Interaction: Utilizes microphone input for voice commands, enabling hands-free operation.
 	•	Natural Language Processing (NLP): Employs Groq AI for fast, cloud-based intent recognition, allowing natural language understanding without the need for local LLMs.
-	•	Local Code Generation: Leverages Windsurf AI to generate and execute shell scripts locally, facilitating real-time system control and automation.
+	•	Local Code Generation: Leverages Windsurf AI to generate and execute code locally, facilitating real-time system control and automation.
 	•	Modular Design: Features a decoupled architecture separating cloud-based language parsing from local command execution, enhancing flexibility and maintainability.
 
 🔐 Privacy & Efficiency
-	•	Privacy-First Approach: Only the NLP component interacts with the cloud; all sensitive operations, including email and calendar access, are handled locally.
+	•	Privacy-First Approach: This front-end and backend run locally to ensure total security.
 	•	Resource Optimization: Designed to run efficiently on low-power hardware such as Raspberry Pi or legacy PCs, eliminating the need for high-end servers.
 
 🧩 Extensibility
