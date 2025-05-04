@@ -33,7 +33,9 @@ Before proceeding, you'll need a credentials.json file from your Google Cloud Co
 
 Run the following command as root (using sudo) to install all required dependencies:
 
+<bash>
 sudo ./install.sh
+</bash>
 
 This script will:
 
@@ -50,8 +52,15 @@ This script will:
 4. Launch the Assistant
 
 After installation, you can start the assistant with:
+<bash>
+./start.sh start
+</bash>
 
-./start.sh start or ./run.sh (non sudo) 
+or 
+
+<bash> ./run.sh </bash>
+
+*as non sudo user**
 
 Then visit http://localhost:3000 in your browser to begin using F.R.I.D.A.Y.
 
