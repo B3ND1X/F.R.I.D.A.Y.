@@ -35,7 +35,7 @@ Run the following command as root (using sudo) to install all required dependenc
 
 ```bash
 sudo ./install.sh
-
+...
 
 This script will:
 
@@ -54,12 +54,12 @@ This script will:
 After installation, you can start the assistant with:
 ```bash
 ./start.sh start| stop | debug
-
+...
 
 or 
 ```bash
  ./run.sh
-
+...
 *as non sudo user**
 
 Then visit http://localhost:3000 in your browser to begin using F.R.I.D.A.Y.
