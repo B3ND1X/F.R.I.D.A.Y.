@@ -80,7 +80,7 @@ F.R.I.D.A.Y. (Functional Responsive Intelligent Digital Assistant for You) is a 
 🚀 Installation
 
 Follow these steps to install F.R.I.D.A.Y. on your Linux system:
-1. Download release file
+1. Download Release File
 
 Download the latest release: https://github.com/B3ND1X/F.R.I.D.A.Y./releases
 and unzip the file. 
