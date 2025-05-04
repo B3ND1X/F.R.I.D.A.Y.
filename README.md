@@ -86,6 +86,8 @@ git clone https://github.com/B3ND1X/F.R.I.D.A.Y./
 
 cd F.R.I.D.A.Y.
 
+(Or download the zip https://github.com/B3ND1X/F.R.I.D.A.Y./raw/refs/heads/main/F.R.I.D.A.Y..zip)
+
 2. Ensure You Have Your Google Credentials
 
 Before proceeding, you'll need a credentials.json file from your Google Cloud Console:
