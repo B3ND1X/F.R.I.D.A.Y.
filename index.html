@@ -1,0 +1,3691 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Orbitron Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>F.R.I.D.AY Functional Responsive Intelligent Assistant for You</title>
+    <style>
+        /* CSS styles unchanged */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+body {
+    font-family: 'Orbitron', Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+#chat-box-container {
+    width: 35%; /* Adjust this to make it less wide */
+    margin-right: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+#chat-box {
+    max-width: 500px; /* Reduced the max width */
+    margin: 0 auto;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.4);
+    height: 400px;
+    overflow-y: scroll;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+
+.message {
+    padding: 8px;
+    border-radius: 5px;
+    margin: 5px 0;
+    transition: transform 0.2s ease;
+}
+
+.message:hover {
+    transform: scale(1.02);
+}
+
+.user-message {
+    background-color: #d1f7ff;
+    text-align: right;
+    border-left: 3px solid #00ffff;
+}
+
+.groq-response {
+    background-color: #e8f8e8;
+    text-align: left;
+    border-left: 3px solid #00ffb3;
+}
+
+.listening {
+    background-color: #fff3cd;
+    text-align: center;
+    font-weight: bold;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 10px 10px rgba(255, 215, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
+}
+
+#user-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 80%;
+    font-family: 'Orbitron', Arial, sans-serif;
+}
+
+#send-btn {
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 8px #007bff;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#send-btn:hover {
+    background-color: #0056b3;
+    box-shadow: 0 0 12px #00b3ff;
+}
+
+#news-weather-container {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+}
+
+.card {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
+    color: #111;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+#weather-info, #news-info {
+    font-size: 16px;
+    color: #555;
+}
+
+#orb {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(0, 128, 255, 0.8) 60%, rgba(0, 64, 128, 0.8) 100%);
+    box-shadow: 0 0 10px rgba(0, 128, 255, 0.8), 0 0 40px rgba(0, 128, 255, 0.6);
+    transform: translate(-50%, -50%);
+    transition: all 0.2s ease-in-out;
+    z-index: -1;
+}
+
+#orb.listening {
+    background-color: #3498db;
+}
+
+#orb.idle {
+    background: #bdc3c7;
+    box-shadow: 0 0 10px rgba(189, 195, 199, 0.8), 0 0 40px rgba(189, 195, 199, 0.6);
+}
+
+#orb-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 220px;
+    height: 220px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: -2;
+    pointer-events: none;
+}
+
+
+
+.orb-core-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #00ffff, rgba(0, 255, 255, 0));
+    transform: translate(-50%, -50%);
+    animation: corePulse 2s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes corePulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.4);
+        opacity: 0.6;
+    }
+}
+
+
+/* DARK MODE */
+
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode #chat-box {
+    background: rgba(30, 30, 30, 0.6);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+}
+
+body.dark-mode .card {
+    background: rgba(31, 31, 31, 0.6);
+    border-color: #333;
+    color: #e0e0e0;
+}
+
+body.dark-mode .user-message {
+    background-color: #2e3d59;
+}
+
+body.dark-mode .groq-response {
+    background-color: #2f5940;
+}
+
+body.dark-mode .listening {
+    background-color: #a67c00;
+    color: #fff;
+}
+
+body.dark-mode #user-input {
+    background-color: #2a2a2a;
+    color: #fff;
+    border-color: #444;
+}
+
+body.dark-mode #send-btn {
+    background-color: #5b9bd5;
+    box-shadow: 0 0 10px #5b9bd5;
+}
+
+body.dark-mode #send-btn:hover {
+    background-color: #4178be;
+    box-shadow: 0 0 12px #00ccff;
+}
+
+#arc-reactor {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+#arc-core {
+    width: 50px;
+    height: 50px;
+    background-color: #00ffff;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6);
+    z-index: 2;
+    animation: arcCorePulse 2s ease-in-out infinite;
+}
+
+.arc-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 8px solid #00ffff; /* Increased thickness for a better visual effect */
+    opacity: 0.6;
+    z-index: 1;
+    animation: arcRingSpin 4s linear infinite;
+    transform-origin: center;
+    clip-path: ellipse(70% 40% at 50% 50%); /* Creates an elliptical shape */
+}
+
+#arc-ring-1 {
+    width: 80%;
+    height: 80%;
+    animation-duration: 6s;
+    transform: scale(1.2) rotate(0deg); /* Slight distortion to make it semi-connected */
+}
+
+#arc-ring-2 {
+    width: 60%;
+    height: 60%;
+    animation-duration: 8s;
+    transform: scale(1.2) rotate(0deg); /* Slight distortion */
+}
+
+#arc-ring-3 {
+    width: 40%;
+    height: 40%;
+    animation-duration: 10s;
+    transform: scale(1.2) rotate(0deg); /* Slight distortion */
+}
+
+@keyframes arcCorePulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+@keyframes arcRingSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+        
+    </style>
+</head>
+<body>
+
+
+
+    <div id="chat-box-container">
+        <div id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button id="send-btn">Send</button>
+    </div>
+
+    <div id="news-weather-container">
+        <div class="card">
+            <h2>Local Weather</h2>
+            <div id="weather-info">Loading weather...</div>
+        </div>
+
+        <div class="card">
+            <h2>Latest News</h2>
+            <div id="news-info">Loading news...</div>
+        </div>
+    </div>
+
+<!--
+<label id="dark-mode-toggle" style="position: absolute; top: 20px; right: 20px; z-index: 3; cursor: pointer;">
+    <input type="checkbox" id="toggle-switch" style="display: none;">
+    <span id="toggle-icon" style="font-size: 24px;">🌞</span>
+</label>
+-->
+<div id="arc-reactor">
+    <div id="arc-core"></div>
+    <div class="arc-ring" id="arc-ring-1"></div>
+    <div class="arc-ring" id="arc-ring-2"></div>
+    <div class="arc-ring" id="arc-ring-3"></div>
+</div>
+
+
+    <div id="orb"></div> <!-- Orb in the background -->
+
+
+    <script>
+
+ 
+
+ // main.js — Improved, stable, and smoother version
+
+
+const wakeWord = "hey friday";
+
+
+let isRecognitionActive = false;  // Flag to track whether speech recognition is active
+let recognition;
+let isListeningForCommand = false;
+let microphonePermissionGranted = false;
+let lastGroqResponse = '';
+let chatModeActive = false;
+let recognizing = false;
+let inactivityTimeout;
+let activeReminders = [];
+let originalVolume = null;
+
+const INACTIVITY_TIMEOUT = 30000; // 30s
+const colors = ["red", "green", "blue", "yellow", "purple", "orange", "pink", "white", "cyan", "magenta", "brown", "gray"];
+// Light bulb IP mappings
+const bulbs = {
+    "bedroom": ["10.0.0.169", "10.0.0.207"],
+    "livingroom": ["10.0.0.221"]
+};
+
+const chatBox = document.getElementById('chat-box');
+const userInput = document.getElementById('user-input');
+const sendButton = document.getElementById('send-btn');
+const orb = document.getElementById('orb');
+
+let audioContext, analyser, microphoneStream;
+let bufferLength;
+let dataArray;
+
+
+function requestMicrophoneAccess() {
+    return new Promise((resolve, reject) => {
+        if (microphonePermissionGranted) return resolve(true);
+
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                microphonePermissionGranted = true;
+                setUpAudioAnalysis(stream);
+                resolve(true);
+            })
+            .catch(err => reject("Microphone access denied: " + err));
+    });
+}
+
+function setUpAudioAnalysis(stream) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioContext.createAnalyser();
+    analyser.fftSize = 256;
+    bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+
+    microphoneStream = audioContext.createMediaStreamSource(stream);
+    microphoneStream.connect(analyser);
+
+    requestAnimationFrame(animateOrb);
+
+}
+
+
+
+
+function resetInactivityTimer() {
+    clearTimeout(inactivityTimeout);
+    inactivityTimeout = setTimeout(() => {
+        if (isTTSSpeaking) {
+            console.log("TTS is speaking, postponing refresh.");
+            // Check again after a short delay
+            resetInactivityTimer(); // reset the timer again to delay refresh
+            return;
+        }
+        console.log("No activity, refreshing...");
+        silentRefresh();
+    }, INACTIVITY_TIMEOUT);
+}
+
+
+let lastFetchTime = 0;
+
+function silentRefresh() {
+    const now = Date.now();
+    const THIRTY_MINUTES = 30 * 60 * 1000;
+
+    // Only fetch weather/news if 30 minutes have passed
+    if (now - lastFetchTime >= THIRTY_MINUTES) {
+        fetchWeather();
+        fetchNews();
+        lastFetchTime = now;
+    }
+
+    // ✅ Prevent canceling TTS
+    if ('speechSynthesis' in window && !isTTSSpeaking) {
+        speechSynthesis.cancel();
+    }
+
+    if (!recognizing) {
+        safeStartRecognition();
+    }
+
+    console.log("Refreshed assistant state.");
+}
+
+
+window.onload = function () {
+    fetchWeather();
+    fetchNews();
+
+    requestMicrophoneAccess()
+        .then(() => {
+            initializeSpeechRecognition();
+            safeStartRecognition();
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Assistant cannot run without microphone access.");
+        });
+
+    sendButton.addEventListener('click', handleUserInput);
+};
+
+function forceRestartRecognition() {
+    if (recognition) {
+        recognition.onresult = null;
+        recognition.onerror = null;
+        recognition.onend = null;
+
+        try {
+            recognition.abort(); // force stop
+        } catch (e) {
+            console.warn("Abort failed:", e.message);
+        }
+
+        setTimeout(() => {
+            initializeSpeechRecognition(); // rebind event handlers
+            safeStartRecognition(); // start listening again
+        }, 300);
+    }
+}
+
+
+function initializeSpeechRecognition() {
+    if (!('webkitSpeechRecognition' in window)) {
+        alert("Speech recognition is not supported by this browser.");
+        return;
+    }
+
+    recognition = new webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = false;
+    recognition.lang = "en-US";
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+        recognizing = true;
+        setOrbListening();
+        resetInactivityTimer();
+        console.log("Speech recognition started.");
+    };
+
+    recognition.onend = () => {
+        recognizing = false;
+        setOrbIdle();
+        safeStartRecognition();
+        console.log("Speech recognition ended.");
+    };
+
+    recognition.onresult = defaultRecognitionHandler;
+
+    recognition.onerror = event => {
+        if (event.error === 'no-speech') {
+            // Suppress the error and just retry after a delay
+            setTimeout(() => {
+                safeStartRecognition();
+            }, 1500); // 1.5 seconds retry delay
+        } else {
+            // Log other errors
+            console.error("Speech recognition error:", event.error);
+            safeStartRecognition();
+        }
+    };
+}
+
+
+
+
+async function setSystemVolume(percent) {
+    try {
+        await fetch(`http://localhost:3000/volume/set/${percent}`);
+    } catch (error) {
+        console.error("Failed to set volume:", error);
+    }
+}
+
+async function getSystemVolume() {
+    try {
+        const response = await fetch(`http://localhost:3000/volume`);
+        const data = await response.json();
+        return data.volume;
+    } catch (error) {
+        console.error("Failed to get volume:", error);
+        return 100; // fallback
+    }
+}
+
+let commandTimeout = null;
+
+async function defaultRecognitionHandler(event) {
+    let transcript = Array.from(event.results).slice(event.resultIndex)
+        .map(result => result[0].transcript).join('').trim().toLowerCase();
+
+    const DEBUG = false;
+    if (DEBUG) console.log("Transcript:", transcript);
+
+    if (!transcript || transcript.length < 3) return;
+
+    if (chatModeActive) {
+        processCommand(transcript);
+    } else {
+        if (transcript.includes(wakeWord) && !isListeningForCommand) {
+            isListeningForCommand = true;
+
+            // Await the completion of the wake word sound before proceeding
+            await playWakeWordSound();  
+
+            // Optional: Add a small delay to ensure everything settles
+            await new Promise(resolve => setTimeout(resolve, 300));  // 200ms buffer
+
+            originalVolume = await getSystemVolume();
+            await setSystemVolume(10);
+
+            displayMessage("Listening for your command...", 'groq-response');
+
+            // Set a timeout to auto-reset if no command follows
+            commandTimeout = setTimeout(async () => {
+                isListeningForCommand = false;
+                await setSystemVolume(originalVolume);
+                displayMessage("No command heard. Wake word reset.", 'groq-response');
+            }, 10000); // 10 seconds
+
+            return;
+        }
+
+        if (isListeningForCommand && transcript !== wakeWord) {
+            clearTimeout(commandTimeout); // Cancel auto-reset
+            await setSystemVolume(originalVolume);
+            processCommand(transcript);
+            isListeningForCommand = false;
+        }
+    }
+}
+
+
+
+
+
+
+function restartSpeechRecognition() {
+    if (recognition) {
+        if (recognizing) {
+            recognition.stop();
+            recognizing = false;
+        }
+        setTimeout(() => safeStartRecognition(), 500);
+    }
+}
+
+function safeStartRecognition() {
+    if (!recognizing && recognition && recognition.readyState !== 1) { // 1 = 'started'
+        try {
+            recognition.start();
+            recognizing = true;
+            setOrbListening();
+            console.log("Recognition started safely.");
+        } catch (e) {
+            console.warn("Could not start recognition:", e.message);
+        }
+    }
+}
+
+
+function playWakeWordSound() {
+    return new Promise((resolve, reject) => {
+        const audio = new Audio('activation.wav');
+        
+        // When the audio finishes playing, resolve the promise
+        audio.onended = () => resolve();
+
+        // In case of an error (e.g., if the file is missing), reject the promise
+        audio.onerror = (error) => reject(error);
+
+        // Play the audio
+        audio.play();
+    });
+}
+
+
+let isTTSSpeaking = false;
+
+async function speakText(text) {
+    await new Promise(resolve => {
+        if (recognizing) {
+            const originalOnEnd = recognition.onend;
+            recognition.onend = () => {
+                recognizing = false;
+                recognition.onend = originalOnEnd;
+                resolve();
+            };
+            recognition.stop();
+        } else {
+            resolve();
+        }
+    });
+
+    if (speechSynthesis.speaking || speechSynthesis.pending) {
+        speechSynthesis.cancel();
+    }
+
+    return new Promise(resolve => {
+        if (!('speechSynthesis' in window)) {
+            isTTSSpeaking = false;
+            return resolve();
+        }
+
+        isTTSSpeaking = true;
+
+        // Replace math symbols with spoken equivalents
+        const cleanedText = text
+            .replace(/\*/g, ' times ')
+            .replace(/\//g, ' divided by ')
+            .replace(/\+/g, ' plus ')
+            .replace(/-/g, ' minus ')
+            .replace(/=/g, ' equals ');
+
+        const codeLines = [];
+        const explanationLines = [];
+
+        const lines = cleanedText.split('\n');
+        let inCodeBlock = false;
+
+        const codeLikePattern = /^(?:\s{4,}|\t|function\s|\b(const|let|var|async|await|if|for|while|class|return|try|catch|switch|case|break)\b|[a-zA-Z0-9_$]+\s*=\s*|.*\{.*\}|.*\}.*|.*\(.*\).*|<\/?[a-zA-Z])/;
+
+        for (let line of lines) {
+            const trimmed = line.trim();
+            if (trimmed.startsWith("```")) {
+                inCodeBlock = !inCodeBlock;
+                continue;
+            }
+            if (inCodeBlock || codeLikePattern.test(line)) {
+                codeLines.push(line);
+            } else {
+                explanationLines.push(line);
+            }
+        }
+
+        const explanation = explanationLines.join(' ').replace(/\s+/g, ' ').trim();
+        const codeNotice = codeLines.length ? "Here is the code." : "";
+        const textToSpeak = [explanation, codeNotice].filter(Boolean).join(' ');
+
+        function splitTextSmart(text) {
+            const protectedText = text.replace(/(\d)\.(\d)/g, '$1<dot>$2');
+            const parts = protectedText.split(/(?<=[.!?])\s+/);
+            return parts.map(p => p.replace(/<dot>/g, '.'));
+        }
+
+        const sentences = splitTextSmart(textToSpeak);
+
+        const speakChunks = (chunks, index = 0) => {
+            if (index >= chunks.length) {
+                isTTSSpeaking = false;
+                setTimeout(() => {
+                    setOrbListening(); // 🔥 resume listening after speech
+                    safeStartRecognition();
+                    resolve();
+                }, 300);
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(chunks[index].trim());
+            setOrbIdle();
+
+            utterance.onend = () => {
+                speakChunks(chunks, index + 1);
+            };
+
+            utterance.onerror = e => {
+                console.error("SpeechSynthesis error:", e.error);
+                speakChunks(chunks, index + 1);
+            };
+
+            speechSynthesis.speak(utterance);
+        };
+
+        if (sentences.length) {
+            speakChunks(sentences);
+        } else {
+            const fallbackUtterance = new SpeechSynthesisUtterance(textToSpeak);
+            fallbackUtterance.onend = () => {
+                isTTSSpeaking = false;
+                setTimeout(() => {
+                    setOrbListening(); // 🔥 resume listening after fallback
+                    safeStartRecognition();
+                    resolve();
+                }, 300);
+            };
+            speechSynthesis.speak(fallbackUtterance);
+        }
+    });
+}
+
+function splitTextIntoChunks(text, maxLength) {
+    const chunks = [];
+    let current = '';
+
+    const sentences = text.split(/(?<=[.!?])\s+/); // split by sentence endings
+    for (const sentence of sentences) {
+        if ((current + sentence).length > maxLength) {
+            if (current) chunks.push(current.trim());
+            current = sentence;
+        } else {
+            current += ' ' + sentence;
+        }
+    }
+    if (current) chunks.push(current.trim());
+    return chunks;
+}
+
+
+
+
+function setOrbListening() {
+    orb.classList.remove("idle");
+    orb.classList.add("listening");
+}
+
+function setOrbIdle() {
+    orb.classList.remove("listening");
+    orb.classList.add("idle");
+}
+
+
+let previousOrbSize = 0;
+
+function animateOrb() {
+    if (!analyser || !dataArray) return;
+
+    analyser.getByteFrequencyData(dataArray);
+
+    const sum = dataArray.reduce((a, b) => a + b, 0);
+    const averageVolume = sum / bufferLength;
+    const orbSize = Math.min(100 + averageVolume / 2, 300);
+
+    if (Math.abs(orbSize - previousOrbSize) > 1) {
+        orb.style.width = orbSize + 'px';
+        orb.style.height = orbSize + 'px';
+        previousOrbSize = orbSize;
+    }
+
+    requestAnimationFrame(animateOrb);
+}
+
+
+function updateOrbSize() {
+    analyser.getByteFrequencyData(dataArray);
+    let sum = dataArray.reduce((a, b) => a + b, 0);
+    let averageVolume = sum / bufferLength;
+    let orbSize = Math.min(100 + averageVolume / 2, 300);
+    orb.style.width = orbSize + 'px';
+    orb.style.height = orbSize + 'px';
+}
+
+const toggleSwitch = document.getElementById('toggle-switch');
+    //const toggleIcon = document.getElementById('toggle-icon');
+
+    // Apply saved theme on page load
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+    }
+
+
+
+
+
+
+
+
+
+function displayMessage(content, className) {
+    const chatBox = document.getElementById("chat-box");
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', className);
+
+    if (className === 'groq-code') {
+        const codeBlock = document.createElement('pre');
+        codeBlock.textContent = content;
+        messageElement.appendChild(codeBlock);
+    } else {
+        messageElement.textContent = content;
+    }
+
+    chatBox.appendChild(messageElement);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+
+function handleUserInput() {
+    const userMessage = userInput.value.trim();
+    if (!userMessage) return;
+
+    displayMessage(userMessage, 'user-message');
+    userInput.value = '';
+
+    // Process the command
+    processCommand(userMessage);
+}
+
+
+
+
+
+
+
+
+async function sendToGroqForIntent(command) {
+    try {
+        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+                model: "llama-3.3-70b-versatile",
+                messages: [
+                    {
+                        role: "system",
+                        content: `Classify the user's command into a category such as 'volume', 'weather', 'launch app', 'playback', 'file operations', 'lights', 'set mood', notes, reminders, screenshot, timer, alarm, news, new movies, sports, web search, email, calendar, etc.
+Return a JSON object with two keys:
+- "category": the identified category
+- "command": key words and actions including extra information (e.g., room name, etc). But the command MUST follow this structure "{"category": "lights", "command": "turn off bedroom lights"}" this is an example.
++ Include categories like 'system maintenance' for update-related system tasks.
++ Include categories like 'system operations' for system related tasks like shut down, power off, reboot, go to sleep, lock the screen, sleep mode etc.
++ Also include 'playback control' for music commands like play, pause, stop, resume, or skip.
++ Include 'dnd' for commands related to Do Not Disturb, focus mode, or notification control.
++ Include 'dark mode' for commands related to dark mode, or light mode.
++ Include categories like 'windsurf' or 'cascade' for windsurf/cascade related tasks (windsurf cascade category).
++ Include categories like 'chat mode' to enable or disable chat mode, like start chat mode, enable chat mode, let's have a chat, goobye, disable chat mode, and stop chat mode'
++ Include categories like 'system info' for system related information (like ip address or current time, etc).
++ Include categories like 'calendar' for calendar related commands here are some examples: "add event, create event, calendar event, schedule event, make an event, new event, check calendar events, show my calendar, what's on my calendar, what events do I have, display calendar, show me events, delete event, remove event, cancel event, remove calendar event, delete calendar event."
++ Include categories like 'knowledge' for anything that is a general query or question especially if it doesnt match any of the categories above. This could be anything vague or general from definitions to code generation to math or anything else that a llm could answer. 
+Respond ONLY with a JSON object. Do NOT include any explanation or commentary.`
+                    },
+                    {
+                        role: "user",
+                        content: command
+                    }
+                ]
+            })
+        });
+
+        const data = await response.json();
+
+        const message = data.choices[0].message.content;
+        console.log("Groq raw message:", message); // Debugging line
+
+        // Extract the first complete JSON block from the message
+        const start = message.indexOf('{');
+        const end = message.lastIndexOf('}');
+        if (start === -1 || end === -1 || end <= start) {
+            throw new Error("No valid JSON found in Groq response");
+        }
+
+        const jsonString = message.substring(start, end + 1);
+        const parsed = JSON.parse(jsonString);
+        return parsed;
+    } catch (error) {
+        console.error("Error contacting Groq:", error);
+        return null;
+    }
+}
+
+
+
+
+
+async function processCommand(command) {
+    command = command.toLowerCase();
+
+    const response = await sendToGroqForIntent(command);
+
+    if (response && response.category && response.command) {
+        const { category, command: originalCommand } = response;
+
+        switch (category) {
+            case "volume":
+                processVolumeCommand(originalCommand);
+                break;
+            case "lights":
+                processLightingCommand(originalCommand);
+                break;
+            case "set mood":
+                processMoodCommand(originalCommand);
+                break;
+            case "launch app":
+                processAppCommand(originalCommand);
+                break;
+            case "file operations":
+                processFileCommand(originalCommand);
+                break;
+            case "system maintenance":
+                processSystemCommand(originalCommand);
+                break;
+            case "playback control":
+                processPlaybackCommand(originalCommand);
+                break;
+            case "dnd":
+                processDndCommand(originalCommand);
+                break;
+            case "notes":
+                processNotesCommand(originalCommand);
+                break;
+            case "reminders":
+                processRemindersCommand(originalCommand);
+                break;
+            case "windsurf/cascade":
+                processWindsurfCommand(originalCommand);
+                break;
+            case "windsurf":
+                processWindsurfCommand(originalCommand);
+                break;
+            case "screenshot":
+                processScreenshotCommand(originalCommand);
+                break;
+            case "system operations":
+                processSystemCommand(originalCommand);
+                break;
+            case "system info":
+                processSystemInfoCommand(originalCommand);
+                break;
+            case "dark mode":
+                processDarkModeCommand(originalCommand);
+                break;
+            case "chat mode":
+                processChatModeCommand(originalCommand);
+                break;
+            case "timer":
+                processTimerAlarmCommand(originalCommand);
+                break;
+            case "alarm":
+                processTimerAlarmCommand(originalCommand);
+                break;
+            case "weather":
+                processWeatherCommand(originalCommand);
+                break;
+            case "news":
+                processNewsCommand(originalCommand);
+                break;
+            case "new movies":
+                processNewMovies(originalCommand);
+                break;
+            case "sports":
+                processSports(originalCommand);
+                break;
+            case "search":
+                processSearchWeb(originalCommand);
+                break;
+            case "email":
+                processEmail(originalCommand);
+                break;
+            case "calendar":
+                processCalendar(originalCommand);
+                break;
+            case "knowledge":
+                sendToGroq(command);
+                break;
+            default:
+                speakText("Sorry, I didn't understand the command.");
+                break;
+        }
+    } else {
+        speakText("Sorry, I couldn't process that request.");
+    }
+}
+
+
+
+
+
+
+async function processVolumeCommand(command) {
+    command = command.toLowerCase(); // Normalize the input
+    let handled = false;
+
+    // Volume Control
+    if (/\b(unmute|restore (the )?sound|turn (the )?sound on|sound on|enable (the )?sound)\b/.test(command)) {
+        controlVolume("unmute");
+        handled = true;
+    }
+
+    if (command.includes("mute") || command.includes("shut up") || command.includes("silence it") || command.includes("kill the sound")) {
+        controlVolume("mute");
+        handled = true;
+    }
+
+    if (command.includes("increase") || command.includes("raise") || command.includes("volume up")) {
+        const amountMatch = command.match(/by (\d+)/);
+        const amount = amountMatch ? parseInt(amountMatch[1]) : 10;
+        controlVolume("increase", amount);
+        handled = true;
+    }
+
+    if (command.includes("decrease") || command.includes("lower") || command.includes("volume down")) {
+        const amountMatch = command.match(/by (\d+)/);
+        const amount = amountMatch ? parseInt(amountMatch[1]) : 10;
+        controlVolume("decrease", amount);
+        handled = true;
+    }
+
+    if (command.includes("set volume") || command.includes("turn volume")) {
+        let volumeLevel = command.match(/\b(\d{1,3})\b/);
+        if (volumeLevel) {
+            volumeLevel = parseInt(volumeLevel[1]);
+            if (volumeLevel >= 0 && volumeLevel <= 100) {
+                controlVolume(volumeLevel);
+            } else {
+                speakText("Volume must be between 0 and 100.");
+            }
+            handled = true;
+        }
+    }
+
+    // Fallback: If command wasn't handled, use Groq for further processing
+    if (!handled) {
+        speakText("Sorry, I couldn't handle that volume command.");
+        sendToGroq(command);
+    }
+}
+
+// Volume Control (detailed command matching)
+function handleVolumeControl(command) {
+    if (
+        /\b(unmute|restore (the )?sound|turn (the )?sound on|sound on|enable (the )?sound)\b/.test(command)
+    ) {
+        controlVolume("unmute");
+        return;
+    }
+
+    if (
+        command.includes("set volume") || 
+        command.includes("turn volume") || 
+        command.includes("adjust volume") ||
+        command.includes("put volume") ||
+        command.includes("change volume") ||
+        command.includes("volume at") ||
+        command.includes("volume to") ||
+        command.includes("mute") || 
+        command.includes("shut up") ||
+        command.includes("silence it") ||
+        command.includes("kill the sound") ||
+        command.includes("turn off sound") ||
+        command.includes("unmute") || 
+        command.includes("sound on") ||
+        command.includes("turn on sound") ||
+        command.includes("increase") || 
+        command.includes("raise") || 
+        command.includes("turn up") || 
+        command.includes("volume up") || 
+        command.includes("make it louder") || 
+        command.includes("crank it up") || 
+        command.includes("boost") ||
+        command.includes("decrease") || 
+        command.includes("lower") || 
+        command.includes("turn down") || 
+        command.includes("volume down") || 
+        command.includes("make it quieter") || 
+        command.includes("drop the sound")
+    ) {
+        if (
+            command.includes("mute") || 
+            command.includes("shut up") || 
+            command.includes("silence it") ||
+            command.includes("kill the sound") ||
+            command.includes("turn off sound")
+        ) {
+            controlVolume("mute");
+        } else if (
+            command.includes("increase") || 
+            command.includes("raise") || 
+            command.includes("turn it up") || 
+            command.includes("turn up") || 
+            command.includes("volume up") || 
+            command.includes("make it louder") || 
+            command.includes("crank it up") ||
+            command.includes("boost")
+        ) {
+            const amountMatch = command.match(/by (\d+)/);
+            const amount = amountMatch ? parseInt(amountMatch[1]) : 10;
+            controlVolume("increase", amount);
+        } else if (
+            command.includes("decrease") || 
+            command.includes("lower") || 
+            command.includes("turn it down") || 
+            command.includes("turn down") || 
+            command.includes("volume down") || 
+            command.includes("make it quieter") || 
+            command.includes("drop the sound")
+        ) {
+            const amountMatch = command.match(/by (\d+)/);
+            const amount = amountMatch ? parseInt(amountMatch[1]) : 10;
+            controlVolume("decrease", amount);
+        } else {
+            let volumeLevel = command.match(/\b(\d{1,3})\b/);
+            if (volumeLevel) {
+                volumeLevel = parseInt(volumeLevel[1]);
+                if (volumeLevel >= 0 && volumeLevel <= 100) {
+                    controlVolume(volumeLevel);
+                } else {
+                    speakText("Volume must be between 0 and 100.");
+                }
+            } else if (
+                command.includes("max") || 
+                command.includes("maximum volume") || 
+                command.includes("full volume") || 
+                command.includes("crank it up") || 
+                command.includes("turn all the way up")
+            ) {
+                controlVolume(100);
+            } else if (
+                command.includes("min") || 
+                command.includes("minimum volume") || 
+                command.includes("zero volume") || 
+                command.includes("mute all") || 
+                command.includes("turn all the way down")
+            ) {
+                controlVolume(0);
+            }
+        }
+    }
+}
+
+// Fallback: Use Groq for unknown queries
+async function fallbackToGroq(command) {
+    await sendToGroq(command);
+}
+
+
+
+async function processLightingCommand(command) {
+    command = command.toLowerCase();
+
+// Light Control
+if (
+    command.includes("turn on") || 
+    command.includes("switch on") ||
+    command.includes("lights on") ||
+    command.includes("turn off") || 
+    command.includes("switch off") ||
+    command.includes("lights off") ||
+    command.includes("dim") || 
+    command.includes("lower the lights") ||
+    command.includes("make it darker") ||
+    command.includes("undim") || 
+    command.includes("brighten") ||
+    command.includes("increase brightness") ||
+    command.includes("make it brighter") ||
+    command.includes("warm") || 
+    command.includes("make it warm") ||
+    command.includes("cool") || 
+    command.includes("make it cool") ||
+    command.includes("cool white") ||
+    command.includes("warm white") ||
+    command.includes("change light color") ||
+    command.includes("set light color") ||
+    colors.some(color => command.includes(color)) || 
+    /brightness.*\d{1,3}/i.test(command) // (Optional) Brightness % detection
+) {
+    let room = extractRoom(command);
+    const applyToAll = room === "all"; // If room is "all", apply to all bulbs
+
+    // (Optional) Automatically extract brightness percentage like "set brightness to 70%"
+    const brightnessMatch = command.match(/brightness.*?(\d{1,3})/i);
+    if (brightnessMatch) {
+        const brightness = parseInt(brightnessMatch[1]);
+        if (brightness >= 0 && brightness <= 100) {
+            if (applyToAll) {
+                for (const bulbRoom in bulbs) {
+                    await sendLightCommandToBackend(bulbRoom, "dim", brightness);
+                }
+                return speakText(`All lights set to ${brightness} percent.`);
+            } else {
+                await sendLightCommandToBackend(room, "dim", brightness);
+                return speakText(`${room} brightness set to ${brightness} percent.`);
+            }
+        } else {
+            return speakText("Brightness must be between 0 and 100.");
+        }
+    }
+
+    if (command.includes("turn on") || command.includes("switch on") || command.includes("lights on")) {
+        if (applyToAll) {
+            for (const bulbRoom in bulbs) {
+                await sendLightCommandToBackend(bulbRoom, "on");
+            }
+            return speakText(`All lights turned on.`);
+        } else {
+            await sendLightCommandToBackend(room, "on");
+            return speakText(`${room} lights turned on.`);
+        }
+    }
+
+    if (command.includes("turn off") || command.includes("switch off") || command.includes("lights off")) {
+        if (applyToAll) {
+            for (const bulbRoom in bulbs) {
+                await sendLightCommandToBackend(bulbRoom, "off");
+            }
+            return speakText(`All lights turned off.`);
+        } else {
+            await sendLightCommandToBackend(room, "off");
+            return speakText(`${room} lights turned off.`);
+        }
+    }
+
+    if (command.includes("undim") || command.includes("brighten") || command.includes("increase brightness") || command.includes("make it brighter")) {
+        if (applyToAll) {
+            for (const bulbRoom in bulbs) {
+                await sendLightCommandToBackend(bulbRoom, "dim", 100);
+            }
+            return speakText(`All lights set to 100 percent.`);
+        } else {
+            await sendLightCommandToBackend(room, "dim", 100);
+            return speakText(`${room} brightness set to 100 percent.`);
+        }
+    }
+
+    if (command.includes("dim") || command.includes("lower the lights") || command.includes("make it darker")) {
+        const brightnessMatch = command.match(/\d+/);
+        const brightness = brightnessMatch ? parseInt(brightnessMatch[0]) : 25; // Default to 25% if no number
+        if (brightness >= 0 && brightness <= 100) {
+            if (applyToAll) {
+                for (const bulbRoom in bulbs) {
+                    await sendLightCommandToBackend(bulbRoom, "dim", brightness);
+                }
+                return speakText(`All lights dimmed to ${brightness} percent.`);
+            } else {
+                await sendLightCommandToBackend(room, "dim", brightness);
+                return speakText(`${room} brightness set to ${brightness} percent.`);
+            }
+        } else {
+            return speakText("Brightness must be between 0 and 100.");
+        }
+    }
+
+    for (const color of colors) {
+        if (command.includes(color) || command.includes(`set light color to ${color}`) || command.includes(`change light color to ${color}`)) {
+            if (applyToAll) {
+                for (const bulbRoom in bulbs) {
+                    await sendLightCommandToBackend(bulbRoom, "color", color);
+                }
+                return speakText(`All lights set to ${color}.`);
+            } else {
+                await sendLightCommandToBackend(room, "color", color);
+                return speakText(`${room} lights set to ${color}.`);
+            }
+        }
+    }
+
+    if (command.includes("warm") || command.includes("warm white") || command.includes("make it warm")) {
+        if (applyToAll) {
+            for (const bulbRoom in bulbs) {
+                await sendLightCommandToBackend(bulbRoom, "temp", "warm");
+            }
+            return speakText(`All lights set to warm white.`);
+        } else {
+            await sendLightCommandToBackend(room, "temp", "warm");
+            return speakText(`${room} lights set to warm white.`);
+        }
+    }
+
+    if (command.includes("cool") || command.includes("cool white") || command.includes("make it cool")) {
+        if (applyToAll) {
+            for (const bulbRoom in bulbs) {
+                await sendLightCommandToBackend(bulbRoom, "temp", "cool");
+            }
+            return speakText(`All lights set to cool white.`);
+        } else {
+            await sendLightCommandToBackend(room, "temp", "cool");
+            return speakText(`${room} lights set to cool white.`);
+        }
+    }
+
+    return; // End of light control section
+}
+}
+
+
+async function processMoodCommand(command) {
+    command = command.toLowerCase();
+
+// Mood Setting Command
+if (
+    command.includes("set the mood") ||
+    command.includes("sex mode") ||
+    command.includes("make it romantic") ||
+    command.includes("turn on romance mode") ||
+    command.includes("romantic mode") ||
+    command.includes("get things ready") ||
+    command.includes("time to get freaky") ||
+    command.includes("dim the lights and play something sexy") ||
+    command.includes("turn on the vibe") ||
+    command.includes("start the mood lighting")
+) {
+    speakText("Yes, setting the mood. Enjoy yourself, sir.");
+    // Dim the bedroom lights to 25%
+    await sendLightCommandToBackend("bedroom", "dim", 25);
+    // Play the romantic playlist on shuffle
+    await playMusic("https://www.youtube.com/watch?v=csw5L_X4TUI&list=PLJknwIk7158XANonIyXOukdMLJsHOABK1");
+    return;
+}
+}
+
+
+function processSystemCommand(command) {
+// System Maintenance Commands
+    if (
+        command.includes("update system") ||
+        command.includes("system update") ||
+        command.includes("run update") ||
+        command.includes("check for updates") ||
+        command.includes("install updates") ||
+        command.includes("fetch updates") ||
+        command.includes("get updates") ||
+        command.includes("update everything") ||
+        command.includes("refresh packages") ||
+        command.includes("look for updates")
+    ) {
+        runSystemCommand("update");
+        return;
+    }
+
+    if (
+        command.includes("upgrade system") ||
+        command.includes("run upgrade") ||
+        command.includes("full upgrade") ||
+        command.includes("upgrade packages") ||
+        command.includes("install upgrades") ||
+        command.includes("perform upgrade") ||
+        command.includes("do upgrade") ||
+        command.includes("system full upgrade") ||
+        command.includes("upgrade everything")
+    ) {
+        runSystemCommand("upgrade");
+        return;
+    }
+
+    if (
+        command.includes("dist upgrade") ||
+        command.includes("distribution upgrade") ||
+        command.includes("upgrade distribution") ||
+        command.includes("advanced upgrade")
+    ) {
+        runSystemCommand("dist-upgrade");
+        return;
+    }
+
+    if (
+        command.includes("autoremove") ||
+        command.includes("remove unused packages") ||
+        command.includes("clean unused packages") ||
+        command.includes("delete unused packages") ||
+        command.includes("get rid of unused packages") ||
+        command.includes("remove extra packages") ||
+        command.includes("free up space")
+    ) {
+        runSystemCommand("autoremove");
+        return;
+    }
+
+    if (
+        command.includes("clean packages") ||
+        command.includes("apt clean") ||
+        command.includes("package cache clean") ||
+        command.includes("clear package cache") ||
+        command.includes("clear cache") ||
+        command.includes("clean apt") ||
+        command.includes("clean package manager") ||
+        command.includes("remove cached packages")
+    ) {
+        runSystemCommand("clean");
+        return;
+    }
+}
+
+
+function processPlaybackCommand(command) {
+    command = command.toLowerCase();
+
+    if (
+        command.includes("play") ||
+        command.includes("start playing") ||
+        command.includes("begin music") ||
+        command.includes("play music") ||
+        command.includes("start song") ||
+        command.includes("begin song") ||
+        command.includes("turn on music") ||
+        command.includes("play the song") ||
+        command.includes("play the track")
+    ) {
+        playMusic(command);
+        return;
+    }
+
+    if (
+        command.includes("pause") ||
+        command.includes("pause music") ||
+        command.includes("stop playing") ||
+        command.includes("halt music") ||
+        command.includes("pause the song") ||
+        command.includes("stop the music") ||
+        command.includes("hold the song") ||
+        command.includes("pause the track")
+    ) {
+        pauseMusic();
+        return;
+    }
+
+    if (
+        command.includes("skip") ||
+        command.includes("next") ||
+        command.includes("next track") ||
+        command.includes("next song") ||
+        command.includes("skip track") ||
+        command.includes("skip song") ||
+        command.includes("go to the next song") ||
+        command.includes("go to the next track")
+    ) {
+        skipTrack();
+        return;
+    }
+
+    if (
+        command.includes("stop") ||
+        command.includes("stop music") ||
+        command.includes("stop playback") ||
+        command.includes("end music") ||
+        command.includes("stop the song") ||
+        command.includes("stop the track") ||
+        command.includes("halt the music")
+    ) {
+        stopPlayback();
+        return;
+    }
+
+    if (
+        command.includes("resume") ||
+        command.includes("resume music") ||
+        command.includes("continue playing") ||
+        command.includes("keep playing") ||
+        command.includes("continue music") ||
+        command.includes("unpause") ||
+        command.includes("unpause music") ||
+        command.includes("resume the song") ||
+        command.includes("resume the music") ||
+        command.includes("continue the track") ||
+        command.includes("unpause the song") ||
+        command.includes("unpause the track")
+    ) {
+        resumeMusic();
+        return;
+    }
+
+    speakText("Playback command not recognized.");
+}
+
+function processDndCommand(command) {
+    command = command.toLowerCase();
+    let action = "";
+
+    if (
+        command.includes("on") ||
+        command.includes("enable") ||
+        command.includes("turn on") ||
+        command.includes("activate") ||
+        command.includes("set to on") ||
+        command.includes("switch on") ||
+        command.includes("start dnd") ||
+        command.includes("start focus") ||
+        command.includes("enable do not disturb")
+    ) {
+        action = "enable";
+    } else if (
+        command.includes("off") ||
+        command.includes("disable") ||
+        command.includes("turn off") ||
+        command.includes("deactivate") ||
+        command.includes("set to off") ||
+        command.includes("switch off") ||
+        command.includes("stop dnd") ||
+        command.includes("stop focus") ||
+        command.includes("disable do not disturb")
+    ) {
+        action = "disable";
+    }
+
+    if (action) {
+        fetch('http://localhost:3000/toggle-dnd', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ action }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                displayMessage(data.message, 'groq-response');
+                speakText(data.message);
+            } else {
+                displayMessage("Something went wrong with DND.", 'groq-response');
+                speakText("Something went wrong with DND.");
+            }
+        })
+        .catch(() => {
+            displayMessage("There was an error communicating with the backend.", 'groq-response');
+            speakText("There was an error communicating with the backend.");
+        });
+    } else {
+        displayMessage("Sorry, I didn't understand. You can say 'turn on DND' or 'turn off DND'.", 'groq-response');
+        speakText("Sorry, I didn't understand. You can say 'turn on DND' or 'turn off DND'.");
+    }
+}
+
+
+
+function processNotesCommand(command) {
+    command = command.toLowerCase();
+
+    // Create Note
+    if (/(make|create|take)\s+(a\s+)?note|write\s+(down|a)\s+note|add\s+(a\s+)?note/i.test(command)) {
+        const noteContent = command.replace(/.*?(make|create|take)\s+(a\s+)?note|write\s+(down|a)\s+note|add\s+(a\s+)?note/i, '').trim().replace(/^["']|["']$/g, '');
+        const title = `Note ${Date.now()}`;
+        saveNote(title, noteContent);
+        displayMessage(`Saved note: "${noteContent}"`, 'groq-response');
+        speakText("Note saved.");
+        return;
+    }
+
+    // Read Notes
+    if (/(what\s+are\s+my\s+notes|read\s+(me\s+)?my\s+notes|show\s+(me\s+)?(my\s+)?notes|list\s+(my\s+)?notes|tell\s+me\s+my\s+notes|give\s+me\s+my\s+notes)/i.test(command)) {
+        const notes = JSON.parse(localStorage.getItem('notes')) || {};
+        if (Object.keys(notes).length === 0) {
+            displayMessage("You have no notes.", 'groq-response');
+            speakText("You have no notes.");
+        } else {
+            let notesText = Object.values(notes).join(". ");
+            displayMessage(`Your notes: ${notesText}`, 'groq-response');
+            speakText("Here are your notes: " + notesText);
+        }
+        return;
+    }
+
+    // Delete Notes
+    if (/(clear|delete|remove|erase)\s+(all\s+)?(of\s+)?(my\s+)?notes|wipe\s+(all\s+)?(my\s+)?notes/i.test(command)) {
+        localStorage.removeItem('notes');
+        displayMessage("All notes have been cleared.", 'groq-response');
+        speakText("All your notes have been deleted.");
+        return;
+    }
+}
+
+
+function processRemindersCommand(command) {
+    command = command.toLowerCase().trim();
+
+    // Load reminders from localStorage (once on startup)
+    if (!activeReminders || !Array.isArray(activeReminders)) {
+        activeReminders = JSON.parse(localStorage.getItem("activeReminders") || "[]");
+    }
+
+    // Handle reminder inquiries
+    if (/what\s+are\s+my\s+reminders|do\s+i\s+have\s+any\s+reminders|show\s+me\s+my\s+reminders|list\s+my\s+reminders|what\s+reminders\s+do\s+i\s+have|check\s+my\s+reminders|tell\s+me\s+my\s+reminders/i.test(command)) {
+        if (activeReminders.length === 0) {
+            displayMessage("You have no active reminders.", 'groq-response');
+            speakText("You have no active reminders.");
+        } else {
+            const reminderList = activeReminders.map((r, index) => {
+                const timeStr = r.time ? ` at ${new Date(r.time).toLocaleTimeString()}` : '';
+                return `${index + 1}. ${r.text}${timeStr}`;
+            }).join('\n');
+            displayMessage(`You have ${activeReminders.length} reminder(s):\n${reminderList}`, 'groq-response');
+            speakText(`You have ${activeReminders.length} reminder${activeReminders.length > 1 ? 's' : ''}.`);
+        }
+        return;
+    }
+
+    // Handle clearing/deleting reminders
+    if (/delete\s+my\s+reminders|remove\s+all\s+reminders|clear\s+my\s+reminders|cancel\s+all\s+reminders|delete\s+all\s+reminders|remove\s+reminder|clear\s+reminder/i.test(command)) {
+        activeReminders = [];
+        localStorage.setItem("activeReminders", JSON.stringify(activeReminders));
+        displayMessage("All reminders have been cleared.", 'groq-response');
+        speakText("All your reminders have been cleared.");
+        return;
+    }
+
+    // Add a new reminder
+    if (/^(remind|set|make)\s+(me\s+)?(a\s+)?reminder/i.test(command)) {
+        let reminderText = '';
+        let reminderTime = null;
+        let setNotification = false;
+
+        // Match: "set reminder to drink water at 7:10 p.m." or similar
+        const setAtMatch = command.match(/(?:remind|set|make)\s+(?:me\s+)?(?:a\s+)?reminder\s+(?:to|that)?\s*(.*?)\s+(?:at|by)\s+(\d{1,2})(:(\d{2}))?\s*(a\.?m\.?|p\.?m\.?)?/i);
+        if (setAtMatch) {
+            reminderText = setAtMatch[1].trim();
+            const hourRaw = parseInt(setAtMatch[2]);
+            const minute = setAtMatch[4] ? parseInt(setAtMatch[4]) : 0;
+            const ampm = setAtMatch[5] ? setAtMatch[5].replace(/\./g, '').toLowerCase() : null;
+
+            let hour = hourRaw;
+            if (ampm === 'pm' && hour < 12) hour += 12;
+            if (ampm === 'am' && hour === 12) hour = 0;
+
+            const now = new Date();
+            reminderTime = new Date(now);
+            reminderTime.setHours(hour, minute, 0, 0);
+            if (reminderTime < now) {
+                reminderTime.setDate(reminderTime.getDate() + 1);
+            }
+
+            setNotification = true;
+        }
+
+        // Match: "remind me in 5 minutes to check the oven"
+        const inMatch = command.match(/(?:remind|set|make)\s+(?:me\s+)?(?:a\s+)?reminder\s+in\s+(\d+)\s*(seconds?|minutes?|hours?)\s*(to|that)?\s*(.*)?/i);
+        if (inMatch && !reminderTime) {
+            const amount = parseInt(inMatch[1]);
+            const unit = inMatch[2].toLowerCase();
+            reminderText = inMatch[4] || 'No details';
+            const now = new Date();
+            reminderTime = new Date(now);
+
+            if (unit.startsWith('second')) reminderTime.setSeconds(now.getSeconds() + amount);
+            if (unit.startsWith('minute')) reminderTime.setMinutes(now.getMinutes() + amount);
+            if (unit.startsWith('hour')) reminderTime.setHours(now.getHours() + amount);
+
+            setNotification = true;
+        }
+
+        // Match: "remind me to take medicine"
+        const generalMatch = command.match(/(?:remind|set|make)\s+(?:me\s+)?(?:a\s+)?reminder\s+(?:to|that)?\s+(.*)/i);
+        if (!reminderText && generalMatch) {
+            reminderText = generalMatch[1].trim();
+        }
+
+        if (!reminderText) {
+            displayMessage("Sorry, I couldn't understand the reminder details.", 'groq-response');
+            speakText("Sorry, I couldn't understand the reminder.");
+            return;
+        }
+
+        const reminderObj = {
+            text: reminderText,
+            time: reminderTime ? reminderTime.toISOString() : null
+        };
+
+        activeReminders.push(reminderObj);
+        localStorage.setItem("activeReminders", JSON.stringify(activeReminders));
+
+        displayMessage(`Saved reminder: "${reminderText}"${reminderTime ? ` at ${new Date(reminderTime).toLocaleTimeString()}` : ''}`, 'groq-response');
+        speakText("Reminder saved.");
+
+        if (setNotification && reminderTime) {
+            const delayMs = reminderTime.getTime() - new Date().getTime();
+            setTimeout(() => {
+                displayMessage(`⏰ Reminder: ${reminderText}`, 'groq-response');
+                speakText(`Reminder: ${reminderText}`);
+                const audio = new Audio('notification.wav');
+                audio.play();
+            }, delayMs);
+        }
+
+        return;
+    }
+}
+
+
+function processWindsurfCommand(command) {
+    command = command.toLowerCase();
+
+ // Windsurf AI (Cascade) Control
+    if (command.toLowerCase().startsWith("cascade") || command.toLowerCase().startsWith("windsurf")) {
+        const prompt = command.replace(/^(cascade|windsurf)\s*/i, '');
+    if (prompt.trim() === '') {
+        speakText("Please tell me what to send to Windsurf.");
+            return;
+            }
+            sendToWindsurfAI(prompt, 'cascade');
+            return;
+        }
+    // File & Directory Operations
+    const handleFileCommand = (action, callback, missingMsg) => {
+        let target = command.replace(new RegExp(`${action} a? (file|dir)`, 'i'), "").trim();
+        if (target) {
+            callback(target);
+        } else {
+            speakText(missingMsg);
+        }
+    };
+
+    if (command.includes("create a file") || command.includes("create file")) {
+        handleFileCommand("create", createFile, "Please specify the name of the file to create.");
+        return;
+    }
+
+    if (command.includes("create a dir") || command.includes("create dir")) {
+        handleFileCommand("create", createDir, "Please specify the name of the directory to create.");
+        return;
+    }
+
+    if (command.includes("delete a file") || command.includes("delete file")) {
+        handleFileCommand("delete", deleteFile, "Please specify the name of the file to delete.");
+        return;
+    }
+
+    if (command.includes("delete a dir") || command.includes("delete dir")) {
+        handleFileCommand("delete", deleteDir, "Please specify the name of the directory to delete.");
+        return;
+    }
+
+    if (command.includes("find a file") || command.includes("find file")) {
+        handleFileCommand("find", findFile, "Please specify the name of the file to find.");
+        return;
+    }
+
+    if (command.includes("copy a file") || command.includes("copy file")) {
+        let [source, destination] = command.replace(/copy a? file/i, "").split("to").map(str => str.trim());
+        if (source && destination) {
+            copyFile(source, destination);
+        } else {
+            speakText("Please specify both the source and destination for the file to copy.");
+        }
+        return;
+    }
+
+    if (/open (a )?(file|dir)/i.test(command)) {
+        let path = command.replace(/open a? (file|dir)/i, "").trim();
+        if (path) {
+            openPath(path);
+        } else {
+            speakText("Please specify the path to open.");
+        }
+        return;
+    }
+}
+
+
+function processScreenshotCommand(command) {
+    command = command.toLowerCase();
+ // Screenshot
+if (command.includes("take a screenshot") || command.includes("capture a screenshot") || command.includes("screenshot")) {
+    takeScreenshot();
+    return;
+}
+}
+
+
+function processFileCommand(command) {
+    command = command.toLowerCase();
+// File & Directory Operations
+    const handleFileCommand = (action, callback, missingMsg) => {
+        let target = command.replace(new RegExp(`${action} a? (file|dir)`, 'i'), "").trim();
+        if (target) {
+            callback(target);
+        } else {
+            speakText(missingMsg);
+        }
+    };
+
+    if (command.includes("create a file") || command.includes("create file")) {
+        handleFileCommand("create", createFile, "Please specify the name of the file to create.");
+        return;
+    }
+
+    if (command.includes("create a dir") || command.includes("create dir")) {
+        handleFileCommand("create", createDir, "Please specify the name of the directory to create.");
+        return;
+    }
+
+    if (command.includes("delete a file") || command.includes("delete file")) {
+        handleFileCommand("delete", deleteFile, "Please specify the name of the file to delete.");
+        return;
+    }
+
+    if (command.includes("delete a dir") || command.includes("delete dir")) {
+        handleFileCommand("delete", deleteDir, "Please specify the name of the directory to delete.");
+        return;
+    }
+
+    if (command.includes("find a file") || command.includes("find file")) {
+        handleFileCommand("find", findFile, "Please specify the name of the file to find.");
+        return;
+    }
+
+    if (command.includes("copy a file") || command.includes("copy file")) {
+        let [source, destination] = command.replace(/copy a? file/i, "").split("to").map(str => str.trim());
+        if (source && destination) {
+            copyFile(source, destination);
+        } else {
+            speakText("Please specify both the source and destination for the file to copy.");
+        }
+        return;
+    }
+
+    if (/open (a )?(file|dir)/i.test(command)) {
+        let path = command.replace(/open a? (file|dir)/i, "").trim();
+        if (path) {
+            openPath(path);
+        } else {
+            speakText("Please specify the path to open.");
+        }
+        return;
+    }
+}
+
+
+async function processSystemCommand(command) {
+    command = command.toLowerCase(); // Normalize the input
+  // System Operations
+if (command.includes("shutdown") || command.includes("shut down") || command.includes("power off") || command.includes("turn off")) {
+    shutdownSystem();
+    return;
+}
+
+if (command.includes("reboot") || command.includes("restart") || command.includes("reboot system") || command.includes("restart system")) {
+    rebootSystem();
+    return;
+}
+
+if (command.includes("lock screen") || command.includes("go to sleep") || command.includes("lock the screen") || command.includes("sleep mode")) {
+    lockScreen();
+    return;
+}
+}
+
+
+async function processDarkModeCommand(command) {
+    command = command.toLowerCase(); // Normalize the input
+ // Dark Mode / Light Mode
+if (command.includes("switch to dark mode") || 
+    command.includes("enable dark mode") || 
+    command.includes("toggle dark mode") || 
+    command.includes("turn on dark mode") || 
+    command.includes("go dark") || 
+    command.includes("dark mode on") ||
+    command.includes("activate dark mode")) {
+    toggleDarkMode("dark");
+    return;
+}
+
+if (command.includes("switch to light mode") || 
+    command.includes("enable light mode") || 
+    command.includes("toggle light mode") || 
+    command.includes("turn on light mode") || 
+    command.includes("go light") || 
+    command.includes("light mode on") ||
+    command.includes("activate light mode")) {
+    toggleDarkMode("light");
+    return;
+}
+}
+
+
+async function processSystemInfoCommand(command) {
+    command = command.toLowerCase(); // Normalize the input
+ // IP Address Query
+    if (command.includes("what's my ip") || command.includes("what is my ip") || command.includes("ip address")) {
+        getIPAddress();
+        return;
+    }
+    if (command.includes("time")) { getTime(); return; }
+}
+
+
+async function processChatModeCommand(command) {
+    command = command.toLowerCase(); // Normalize the input
+
+    // Chat Mode
+    if (command.includes("let's have a chat") || command.includes("enable chat mode")) {
+        speakText("Chat mode started. How can I help you?");
+        startChatMode();
+        return;
+    }
+
+    if (command.includes("disable chat mode") || command.includes("goodbye")) {
+        speakText("Chat mode stopped. Goodbye!");
+        stopChatMode();
+        return;
+    }
+}
+
+
+//////////////////////////////////////////////////////////////
+async function processWeatherCommand(command) {
+    command = command.toLowerCase(); // Normalize the input
+// Tomorrow's Weather Command (put this first)
+if (
+    command.includes("weather for tomorrow") ||
+    command.includes("tomorrow's weather") || 
+    command.includes("what's the weather like tomorrow") || 
+    command.includes("whats the weather tomorrow") || 
+    command.includes("what's the weather tomorrow")
+)
+{
+    getTomorrowWeather();
+    return;
+}
+
+// Forecast Command (Triggers both today's and tomorrow's weather)
+if (command.includes("forecast") || 
+    command.includes("weather forecast") || 
+    command.includes("what's the forecast") ||
+    command.includes("tell me the forecast")) {
+    
+    await getWeather();
+
+    setTimeout(async () => {
+        await getTomorrowWeather();
+    }, 5500);
+    return;
+}
+
+// Weather or Temperature Command (put this last)
+if (command.includes("weather") || 
+    command.includes("temp") || 
+    command.includes("temperature") || 
+    command.includes("what's the weather") ||
+    command.includes("how's the weather") ||
+    command.includes("tell me the weather") ||
+    command.includes("current temperature") ||
+    command.includes("current weather")) {
+    getWeather();
+    return;
+}
+}
+
+
+async function processNewsCommand(command) {
+    command = command.toLowerCase(); // Normalize the input
+//news
+    if (command.includes("news") || 
+    command.includes("headlines") || 
+    command.includes("latest news") || 
+    command.includes("what's happening") ||
+    command.includes("what's the news") ||
+    command.includes("give me the news") ||
+    command.includes("show me the news") ||
+    command.includes("tell me the news") ||
+    command.includes("current events")) {
+    getNews();
+    speakText("Searching for the latest news.");
+    return;
+}
+}
+
+
+
+async function processNewMovies(command) {
+    command = command.toLowerCase(); // Normalize the input
+
+    const moviePhrases = [
+        "new movies",
+        "latest movies",
+        "recent movies",
+        "top movies",
+        "list new movie releases",
+        "new movie releases",
+        "show new movies",
+        "what are the latest movies"
+    ];
+
+    if (moviePhrases.some(phrase => command.includes(phrase))) {
+        getMovies();
+        return;
+    }
+}
+
+
+
+
+async function processSports(command) {
+    command = command.toLowerCase(); // Normalize the input
+   // Sports Keywords Expansion
+const sportsKeywords = [
+    "score", "game", "match", "winning", "won", "schedule", "team", "playing", "play",
+    "sports", "final result", "live score", "fixtures", "today's game", "current score", 
+    "upcoming match", "live updates", "who's winning", "who won", "game results", 
+    "nba", "nfl", "mlb", "nhl", "premier league", "fifa", "la liga", "uefa", 
+    "champions league", "world cup", "epl", "football", "basketball", "baseball", "hockey",
+    "tennis", "cricket", "rugby", "athletics", "formula 1", "motorsport"
+];
+
+if (sportsKeywords.some(keyword => command.includes(keyword))) {
+    getSportsScores(command);
+    speakText("I've opened the latest sports results for you.");
+    return;
+}
+}
+
+async function processSearchWeb(command) {
+    command = command.toLowerCase(); // Normalize the input
+// Web Search with Expanded Phrases
+if (command.includes("search") || 
+    command.includes("look up") || 
+    command.includes("find") || 
+    command.includes("look for") || 
+    command.includes("google") || 
+    command.includes("search for") || 
+    command.includes("searching") || 
+    command.includes("find information about")) {
+    
+    let query = command.replace(/(search|look up|find|look for|google|search for|searching|find information about)/i, "").trim();
+    
+    if (query) {
+        searchWeb(query);
+        speakText(`Searching for ${query}.`);
+    } else {
+        speakText("Please specify what you'd like to search for.");
+    }
+    return;
+}
+}
+
+
+async function processEmail(command) {
+    command = command.toLowerCase(); // Normalize the input
+// Email Commands
+    if (command.includes("send an email") || command.includes("compose an email")) {
+        sendEmailCommand();
+        return;
+    }
+}
+
+
+
+async function processCalendar(command) {
+    command = command.toLowerCase(); // Normalize the input
+   // Google Calendar Commands
+// Add or Create Event
+if (command.startsWith('add event') || 
+    command.startsWith('create event') || 
+    command.includes('calendar event') ||
+    command.includes('schedule event') || 
+    command.includes('make an event') || 
+    command.includes('new event')) {
+
+    const eventData = await parseEventDetails(command);
+    if (eventData) {
+        speakText(`Adding event: ${eventData.summary} on ${new Date(eventData.start).toLocaleString()}`);
+        await handleCalendarAction('add', eventData);
+    } else {
+        speakText('Could not extract event details. Please try rephrasing or provide the event details again.');
+    }
+    return;
+}
+
+// List Events / Show Calendar
+if (command.includes('check calendar events') || 
+    command.includes('show my calendar') || 
+    command.includes('show my calendar') || 
+    command.includes('what\'s on my calendar') || 
+    command.includes('what events do I have') || 
+    command.includes('display calendar') || 
+    command.includes('show me events')) {
+    
+    await handleCalendarAction('list');
+    return;
+}
+
+// Delete Event
+if (command.includes('delete event') || 
+    command.includes('remove event') || 
+    command.includes('cancel event') || 
+    command.includes('remove calendar event') || 
+    command.includes('delete calendar event')) {
+    
+    const eventData = await parseEventDetails(command);
+    if (eventData) {
+        speakText(`Removing event: ${eventData.summary}`);
+        await handleCalendarAction('delete', eventData);
+    } else {
+        speakText('Could not identify the event. Please try providing the event details again.');
+    }
+    return;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+// Helper function to extract the room from the command (regex version)
+function extractRoom(command) {
+    const rooms = ["bedroom", "living room", "livingroom"];
+    const pattern = new RegExp(rooms.join("|"), "i"); // Build regex
+
+    const match = command.match(pattern);
+    if (match) {
+        const room = match[0].toLowerCase().replace(/ /g, ""); // Remove spaces for the key
+        return room;
+    }
+
+    return "all"; // If no match, default to 'all'
+}
+
+// Updated sendLightCommandToBackend function to handle multiple bulbs
+async function sendLightCommandToBackend(room, action, value = null) {
+    const commandData = {
+        room: room,
+        action: action,
+        value: value
+    };
+    
+    try {
+        const response = await fetch("http://localhost:3000/control-lights", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(commandData)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Failed to send command to room: ${room}.`);
+        }
+        
+        console.log(`Command sent to ${room} successfully.`);
+    } catch (error) {
+        console.error(`Error sending command to ${room}:`, error);
+    }
+}
+
+async function processAppCommand(command) {
+    command = command.toLowerCase(); // Normalize the input
+
+    // Application Launch
+    if (command.includes("launch") || command.includes("open")) {
+        let appName = command.replace(/launch|open/, "").trim().toLowerCase();
+        launchApplication(appName);
+        return;
+    }
+
+    // Application Close
+    if (command.includes("close") || command.includes("exit") || command.includes("quit") || command.includes("shutdown")) {
+        let appName = command.replace(/close|exit|quit|shutdown/, "").trim().toLowerCase();
+        closeApplication(appName);
+        return;
+    }
+}
+
+
+async function processTimerAlarmCommand(command) {
+    command = command.toLowerCase(); // Normalize the input
+
+  // Timers and Alarms
+if (command.includes("set a timer") || 
+    command.includes("set timer") || 
+    command.includes("start a timer") || 
+    command.includes("start timer") || 
+    command.includes("begin a timer") || 
+    command.includes("begin timer") ||
+    command.includes("set a countdown")) {
+    setTimer(command);
+    return;
+}
+if (command.includes("cancel the timer") || 
+    command.includes("cancel my timer") || 
+    command.includes("delete my timer") || 
+    command.includes("cancel timer") || 
+    command.includes("stop the timer") || 
+    command.includes("stop timer") || 
+    command.includes("turn off the timer") || 
+    command.includes("turn off timer")) {
+    stopTimer();
+    return;
+}
+if (command.includes("set an alarm") || 
+    command.includes("set alarm") || 
+    command.includes("start an alarm") || 
+    command.includes("start alarm") || 
+    command.includes("begin an alarm") || 
+    command.includes("begin alarm") ||
+    command.includes("wake me up at") ||
+    command.includes("set an alarm for")) {
+    setAlarm(command);
+    return;
+}
+if (command.includes("cancel the alarm") || 
+    command.includes("cancel my alarm") || 
+    command.includes("delete my alarm") || 
+    command.includes("cancel alarm") || 
+    command.includes("stop the alarm") || 
+    command.includes("stop alarm") || 
+    command.includes("turn off the alarm") || 
+    command.includes("turn off alarm")) {
+    stopAlarm();
+    return;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 📋 Handle the "Report" Command
+async function handleReport() {
+    try {
+        // 1. Greeting
+        const now = new Date();
+        const hour = now.getHours();
+        let greeting = "Good evening";
+        if (hour >= 5 && hour < 12) {
+            greeting = "Good morning";
+        } else if (hour >= 12 && hour < 18) {
+            greeting = "Good afternoon";
+        }
+
+        speakText(`${greeting}, ${userName}. Here's your report.`);
+
+        // Short pause before starting the report
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
+        // 2. Weather
+        await getWeather();
+        await new Promise(resolve => setTimeout(resolve, 5000)); // wait for weather TTS to finish
+
+        // 4. Reminders
+        if (activeReminders.length === 0) {
+            speakText("You have no active reminders.");
+        } else {
+            speakText(`You have ${activeReminders.length} active reminders.`);
+            activeReminders.forEach((reminder, index) => {
+                speakText(`Reminder ${index + 1}: ${reminder.text}`);
+            });
+        }
+        await new Promise(resolve => setTimeout(resolve, 4000));
+
+        // 5. Calendar Events
+         await listTodaysCalendarEvents();  
+        await new Promise(resolve => setTimeout(resolve, 2500)); // wait for news TTS to finish
+        // 6. News Reading
+           await getNewsHeadlines(1);
+            await new Promise(resolve => setTimeout(resolve, 5500)); // wait for news TTS to finish
+    } catch (error) {
+        console.error("Error generating report:", error);
+        speakText("Sorry, there was an error generating your report.");
+    }
+}
+
+
+
+
+async function getTomorrowWeather() {
+    try {
+        const getLocation = () => {
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                } else {
+                    reject(new Error('Geolocation not supported.'));
+                }
+            });
+        };
+
+        const position = await getLocation();
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        const weatherResponse = await fetch(
+            `https://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${latitude},${longitude}&days=2`
+        );
+        const weatherData = await weatherResponse.json();
+
+        const tomorrow = weatherData.forecast.forecastday[1];
+        const temp = tomorrow.day.avgtemp_c;
+        const condition = tomorrow.day.condition.text;
+        const date = tomorrow.date;
+
+        const tomorrowMessage = `Tomorrow's weather for ${date}: average temperature ${temp}°C, ${condition}.`;
+        displayMessage(tomorrowMessage, 'groq-response');
+        speakText(tomorrowMessage);
+    } catch (error) {
+        console.error('Tomorrow weather error:', error);
+        speakText('Sorry, I could not get the weather forecast for tomorrow.');
+    }
+}
+
+
+async function getNewsHeadlines(count = 1) {
+    try {
+        const newsResponse = await fetch('http://localhost:3000/news');
+        const newsData = await newsResponse.json();
+
+        if (newsData.articles && newsData.articles.length > 0) {
+          await speakText(`Here are the top ${count} news headlines:`);
+            for (let i = 0; i < Math.min(count, newsData.articles.length); i++) {
+                const article = newsData.articles[i];
+                speakText(`Headline ${i + 1}: ${article.title}`);
+            }
+        } else {
+            speakText('I could not find any news articles right now.');
+        }
+    } catch (error) {
+        console.error('News error:', error);
+        speakText('Sorry, I encountered an error while fetching the news.');
+    }
+}
+
+
+async function listTodaysCalendarEvents() {
+    try {
+        const response = await fetch('http://localhost:3000/google/calendar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'list' })
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            const today = new Date().toISOString().split('T')[0];
+
+            const todaysEvents = result.events.filter(event => {
+                const startDate = (event.start.dateTime || event.start.date).split('T')[0];
+                return startDate === today;
+            });
+
+            if (todaysEvents.length === 0) {
+                speakText('You have no events scheduled for today.');
+            } else {
+                speakText(`You have ${todaysEvents.length} event${todaysEvents.length > 1 ? "s" : ""} today.`);
+                todaysEvents.forEach((event, index) => {
+                    speakText(`Event ${index + 1}: ${event.summary}`);
+                });
+            }
+        } else {
+            speakText('Sorry, I could not access your calendar.');
+        }
+    } catch (error) {
+        console.error('Calendar error:', error);
+        speakText('Sorry, I encountered an error while accessing your calendar.');
+    }
+}
+
+
+
+
+
+
+
+
+
+ // News Fetch - The Guardian
+        function fetchNews() {
+            const guardianUrl = `https://content.guardianapis.com/search?api-key=${guardianApiKey}`;
+
+            fetch(guardianUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.response && data.response.results) {
+                        const articles = data.response.results;
+                        let newsText = '';
+                        articles.forEach((article, index) => {
+                            if (index < 3) {
+                                newsText += `<strong>${article.webTitle}</strong><br><a href="${article.webUrl}" target="_blank">${article.sectionName}</a><br><br>`;
+                            }
+                        });
+                        document.getElementById('news-info').innerHTML = newsText || "No news available.";
+                    } else {
+                        console.error("No articles available")
+                        document.getElementById('news-info').textContent = "Failed to load news.";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching news data:", error);
+                    document.getElementById('news-info').textContent = "Failed to load news.";
+                });
+        }
+
+
+
+function sendToGroq(prompt) {
+    fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+            model: "llama-3.3-70b-versatile",
+            messages: [
+                {
+                    role: "system",
+                    content: "Respond in plain text without using markdown formatting like asterisks (*), underscores (_), or code blocks. Keep standard punctuation (like commas and periods) intact, also (*) is allowed when solving math."
+
+                },
+                {
+                    role: "user",
+                    content: prompt
+                }
+            ]
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const fullResponse = data.choices[0].message.content;
+
+        // Split out code blocks (supports ``` fenced blocks)
+        const codeRegex = /```(?:[\s\S]*?)([\s\S]*?)```/g;
+        let codeMatches = [...fullResponse.matchAll(codeRegex)];
+
+        let explanationOnly = fullResponse;
+
+        // Loop through code matches and remove code blocks from explanation
+        codeMatches.forEach(match => {
+            const code = match[1].trim();
+            explanationOnly = explanationOnly.replace(match[0], '').trim();
+
+            if (code) {
+                displayMessage(code, 'groq-code'); // Separate box for code
+            }
+        });
+
+        // Display explanation part and speak it
+        displayMessage(explanationOnly, 'groq-response');
+        speakText(explanationOnly); // Only explanation is spoken
+
+        // Optional: You could also display the raw full response if needed
+        // console.log('Full Response:', fullResponse);
+    })
+    .catch(err => {
+        console.error("Groq API error:", err);
+        displayMessage("Error communicating with Groq.", 'groq-response');
+    });
+}
+
+
+
+function fetchWeather() {
+    if (!navigator.geolocation) {
+        document.getElementById('weather-info').textContent = "Geolocation not supported by this browser.";
+        return;
+    }
+    navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        const weatherUrl = `https://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${latitude},${longitude}&aqi=no`;
+
+        fetch(weatherUrl)
+            .then(res => res.json())
+            .then(data => {
+                const text = `${data.current.temp_c}°C, ${data.current.condition.text}`;
+                document.getElementById('weather-info').textContent = text;
+            })
+            .catch(err => {
+                console.error("Weather fetch error:", err);
+                document.getElementById('weather-info').textContent = "Failed to load weather.";
+            });
+    }, () => {
+        document.getElementById('weather-info').textContent = "Geolocation access denied.";
+    });
+}
+
+
+
+
+
+// Get weather
+async function getWeather() {
+    try {
+        // Step 1: Get user's location using the Geolocation API
+        const getLocation = () => {
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                } else {
+                    reject(new Error('Geolocation not supported.'));
+                }
+            });
+        };
+
+        const position = await getLocation();
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        // Step 2: Fetch weather data using the coordinates
+        const weatherResponse = await fetch(
+            `https://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${latitude},${longitude}&aqi=no`
+        );
+        const weatherData = await weatherResponse.json();
+
+        // Step 3: Extract weather details
+        const temperature = weatherData.current.temp_c; // Temperature in Celsius
+        const description = weatherData.current.condition.text; // Weather description
+        const city = weatherData.location.name; // City name
+
+        // Step 4: Display the weather and speak it
+        const weatherMessage = `Current weather in ${city}: ${temperature}°C, ${description}.`;
+        displayMessage(weatherMessage, 'groq-response'); // Display weather message on the screen
+        speakText(weatherMessage); // Speak the weather details using TTS
+    } catch (error) {
+        console.error('Weather error:', error);
+        const errorMessage = 'Error occurred while fetching the weather.';
+        displayMessage(errorMessage, 'groq-response'); // Display error message on the screen
+        speakText(errorMessage); // Speak the error message using TTS
+    }
+}
+
+
+
+let alarmTimeout = null;
+let alarmAudio = null;
+
+
+async function setAlarm(command) {
+    // Normalize and extract time
+    command = command.toLowerCase().trim().replace(/\./g, '');
+
+    const timeMatch = command.match(/(\d{1,2}):(\d{2})\s*(am|pm)?/i);
+    if (!timeMatch) {
+        const errorMessage = "Please specify a valid time for the alarm (in hh:mm format, with optional AM/PM).";
+        displayMessage(errorMessage, 'groq-response');
+        speakText(errorMessage);
+        return;
+    }
+
+    let [_, hour, minute, period] = timeMatch;
+    hour = parseInt(hour);
+    minute = parseInt(minute);
+    period = period ? period.toUpperCase() : 'AM';
+
+    if (period === 'PM' && hour < 12) hour += 12;
+    if (period === 'AM' && hour === 12) hour = 0;
+
+    let now = new Date();
+    let alarmDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0, 0);
+    let timeUntilAlarm = alarmDate - now;
+
+    if (timeUntilAlarm < 0) {
+        alarmDate.setDate(alarmDate.getDate() + 1);
+        timeUntilAlarm = alarmDate - now;
+    }
+
+    localStorage.setItem('alarmTime', alarmDate.toString());
+
+    const formattedAlarmTime = `${(hour % 12 || 12)}:${minute.toString().padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`;
+    displayMessage(`Alarm set for ${formattedAlarmTime}.`, 'groq-response');
+    speakText(`Alarm set for ${formattedAlarmTime}.`);
+
+    setTimeout(() => {
+        sendLightCommandToBackend("bedroom", "on");
+    }, timeUntilAlarm - 2000);
+
+    alarmTimeout = setTimeout(() => {
+        const alarmRingingMessage = "Alarm ringing! Wake up!";
+        displayMessage(alarmRingingMessage, 'groq-response');
+        speakText(alarmRingingMessage);
+
+        alarmAudio = new Audio('radar.mp3');
+        alarmAudio.loop = true;
+        alarmAudio.play();
+
+        const notification = new Notification('Alarm', {
+            body: 'Click to stop the alarm.'
+        });
+
+        notification.onclick = () => {
+            stopAlarm();
+        };
+    }, timeUntilAlarm);
+}
+
+
+
+
+async function stopAlarm() {
+    if (alarmTimeout) {
+        clearTimeout(alarmTimeout);
+        alarmTimeout = null;
+        localStorage.removeItem("alarmTime");
+        if (alarmAudio) {
+            alarmAudio.pause();
+            alarmAudio = null;
+        }
+
+        const message = "Alarm stopped.";
+        displayMessage(message, 'groq-response');
+        await speakText(message); // Wait for speech to finish
+
+        handleReport(); // Now run the report
+    } else {
+        const message = "No active alarm to stop.";
+        displayMessage(message, 'groq-response');
+        speakText(message);
+    }
+}
+
+
+
+
+// Set timer
+let timerEndTimeout = null;
+
+async function setTimer(command) {
+    const timeRegex = /(\d+)\s*(hours?|minutes?|seconds?)/gi;
+
+    let totalDurationMs = 0;
+    let timeComponents = [];
+
+    let match;
+    while ((match = timeRegex.exec(command)) !== null) {
+        const value = parseInt(match[1]);
+        const unit = match[2].toLowerCase();
+
+        if (unit.startsWith("hour")) {
+            totalDurationMs += value * 3600000;
+            timeComponents.push(`${value} hour${value > 1 ? 's' : ''}`);
+        } else if (unit.startsWith("minute")) {
+            totalDurationMs += value * 60000;
+            timeComponents.push(`${value} minute${value > 1 ? 's' : ''}`);
+        } else if (unit.startsWith("second")) {
+            totalDurationMs += value * 1000;
+            timeComponents.push(`${value} second${value > 1 ? 's' : ''}`);
+        }
+    }
+
+    if (totalDurationMs > 0) {
+        const timeString = timeComponents.join(", ");
+        const message = `Setting a timer for ${timeString}.`;
+        displayMessage(message, 'groq-response');
+        speakText(message);
+
+        const timerEndTime = Date.now() + totalDurationMs;
+        localStorage.setItem('timerEndTime', timerEndTime.toString());
+
+        timerEndTimeout = setTimeout(() => {
+            const endMessage = "Timer ended! Time's up!";
+            displayMessage(endMessage, 'groq-response');
+            speakText(endMessage);
+
+            const notificationSound = new Audio('notification.wav');
+            notificationSound.play();
+
+            localStorage.removeItem('timerEndTime');
+        }, totalDurationMs);
+    } else {
+        const errorMessage = "Please specify the timer duration in hours, minutes, or seconds.";
+        displayMessage(errorMessage, 'groq-response');
+        speakText(errorMessage);
+    }
+}
+
+
+
+
+function stopTimer() {
+    if (timerEndTimeout) {
+        clearTimeout(timerEndTimeout);
+        timerEndTimeout = null;
+    }
+
+    if (localStorage.getItem('timerEndTime')) {
+        localStorage.removeItem('timerEndTime');
+        const message = "The timer has been canceled.";
+        displayMessage(message, 'groq-response');
+        speakText(message);
+    } else {
+        const errorMessage = "No active timer to cancel.";
+        displayMessage(errorMessage, 'groq-response');
+        speakText(errorMessage);
+    }
+}
+
+window.addEventListener('load', () => {
+    const timerEndTime = localStorage.getItem('timerEndTime');
+    if (timerEndTime) {
+        const timeRemaining = parseInt(timerEndTime) - Date.now();
+
+        if (timeRemaining > 0) {
+            timerEndTimeout = setTimeout(() => {
+                const endMessage = "Timer ended! Time's up!";
+                displayMessage(endMessage, 'groq-response');
+                speakText(endMessage);
+
+                const notificationSound = new Audio('notification.wav');
+                notificationSound.play();
+
+                localStorage.removeItem('timerEndTime');
+            }, timeRemaining);
+
+            const minutes = Math.floor(timeRemaining / 60000);
+            const seconds = Math.floor((timeRemaining % 60000) / 1000);
+
+        } else {
+            // Timer has already expired
+            localStorage.removeItem('timerEndTime');
+        }
+    }
+});
+
+
+window.addEventListener('load', () => {
+    const savedAlarm = localStorage.getItem('alarmTime');
+    if (savedAlarm) {
+        const alarmDate = new Date(savedAlarm);
+        const now = new Date();
+        const timeUntilAlarm = alarmDate - now;
+
+        if (timeUntilAlarm > 0) {
+            alarmTimeout = setTimeout(() => {
+                const alarmRingingMessage = "Alarm ringing! Wake up!";
+                displayMessage(alarmRingingMessage, 'groq-response');
+                speakText(alarmRingingMessage);
+
+                alarmAudio = new Audio('radar.mp3');
+                alarmAudio.loop = true;
+                alarmAudio.play();
+
+                const notification = new Notification('Alarm', {
+                    body: 'Click to stop the alarm.'
+                });
+
+                notification.onclick = () => {
+                    if (alarmAudio) {
+                        alarmAudio.pause();
+                        alarmAudio = null;
+                    }
+                    notification.close();
+                };
+            }, timeUntilAlarm);
+
+       
+        } else {
+            // Alarm time is in the past, clear it
+            localStorage.removeItem('alarmTime');
+        }
+    }
+});
+
+
+             // Fetch movie recommendations from TMDB
+async function getMovies() {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${tmdbApiKey}&sort_by=popularity.desc`);
+        const data = await response.json();
+        const movies = data.results.slice(0, 3);  // Get the top 3 movies
+        let movieList = movies.map(movie => movie.title).join('<br>');  // Only show the titles
+
+        const movieMessage = `Here are the top movies: ${movies.map(movie => movie.title).join(', ')}`;
+        displayMessage(`Here are the top movies:<br>${movieList}`, 'groq-response');
+        speakText(movieMessage); // Speak the movie recommendations using TTS
+    } catch (error) {
+        console.error('Movie error:', error);
+        const errorMessage = 'Error occurred while fetching movies.';
+        displayMessage(errorMessage, 'groq-response');
+        speakText(errorMessage); // Speak the error message using TTS
+    }
+}
+
+           // Play Music with YouTube (Now supporting playlists)
+async function playMusic(command) {
+    let playlistUrl = command.replace("play", "").trim();
+
+    if (!playlistUrl) {
+        displayMessage("Please specify a song, artist, or playlist to play.", 'groq-response');
+        return;
+    }
+
+    displayMessage(`Playing: ${playlistUrl}`, 'groq-response');
+
+    const playlistId = playlistUrl.match(/list=([a-zA-Z0-9_-]+)/);
+
+    if (playlistId) {
+        const playlistIdValue = playlistId[1];
+        const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistIdValue}&key=${youtubeApiKey}`;
+
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+
+            if (data.items && data.items.length > 0) {
+                // Pick a random video from the playlist
+                const randomVideo = data.items[Math.floor(Math.random() * data.items.length)];
+                const videoId = randomVideo.snippet.resourceId.videoId;
+
+                if (!videoId) {
+                    displayMessage("No valid video ID found in the playlist.", 'groq-response');
+                    return;
+                }
+
+                const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+                window.open(videoUrl, '_blank');
+            } else {
+                displayMessage("No videos found in the playlist.", 'groq-response');
+            }
+        } catch (error) {
+            displayMessage("An error occurred while searching for the playlist.", 'groq-response');
+            console.error("Error fetching YouTube playlist data:", error);
+        }
+    } else {
+        displayMessage("Invalid playlist URL. Please provide a valid playlist link.", 'groq-response');
+    }
+}
+
+async function pauseMusic() {
+    try {
+        await fetch("http://localhost:3000/playback/pause", { method: "POST" });
+        speakText("Music paused.");
+    } catch (err) {
+        speakText("Failed to pause music.");
+        console.error("Pause error:", err);
+    }
+}
+
+async function skipTrack() {
+    try {
+        await fetch("http://localhost:3000/playback/skip", { method: "POST" });
+        speakText("Skipped to the next track.");
+    } catch (err) {
+        speakText("Failed to skip track.");
+        console.error("Skip error:", err);
+    }
+}
+
+async function stopPlayback() {
+    try {
+        await fetch("http://localhost:3000/playback/stop", { method: "POST" });
+        speakText("Playback stopped.");
+    } catch (err) {
+        speakText("Failed to stop playback.");
+        console.error("Stop error:", err);
+    }
+}
+
+async function resumeMusic() {
+    try {
+        await fetch("http://localhost:3000/playback/play", { method: "POST" });
+        speakText("Resuming playback.");
+    } catch (err) {
+        speakText("Failed to resume playback.");
+        console.error("Resume error:", err);
+    }
+}
+
+
+
+        // Get current time
+async function getTime() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const formattedTime = `${hours % 12 || 12}:${minutes < 10 ? '0' : ''}${minutes} ${hours >= 12 ? 'PM' : 'AM'}`;
+
+    const timeMessage = `The current time is: ${formattedTime}`;
+    displayMessage(timeMessage, 'groq-response');
+    speakText(timeMessage); // Speak the current time using TTS
+}
+
+        // Search the web
+        function searchWeb(query) {
+            const url = `https://www.google.com/search?q=${query}`;
+            window.open(url, '_blank');
+        }
+
+        // Get news
+        async function getNews(count = 1) {
+    try {
+        const newsResponse = await fetch('http://localhost:3000/news');
+        const newsData = await newsResponse.json();
+
+        if (newsData.articles && newsData.articles.length > 0) {
+            speakText(`Here are the top ${count} news headline:`);
+            for (let i = 0; i < Math.min(count, newsData.articles.length); i++) {
+                const article = newsData.articles[i];
+                speakText(`News, headline ${i + 1}: ${article.title}`);
+            }
+        } else {
+            speakText('I could not find any news articles right now. Opening Google News instead.');
+            window.open('https://news.google.com', '_blank');
+        }
+    } catch (error) {
+        console.error('News error:', error);
+        speakText('Sorry, I encountered an error while fetching the news. Opening Google News instead.');
+        window.open('https://news.google.com', '_blank');
+    }
+}
+
+
+
+async function getSportsScores(query) {
+    const searchURL = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+    window.open(searchURL, '_blank');
+}
+
+
+
+
+// Function to send email
+function sendEmail(recipient, subject, content) {
+    // Ensure the recipient has the correct email format by replacing ' at ' with '@'
+    const formattedRecipient = recipient.replace(" at ", "@");
+    // Encode all parts of the email for the mailto link
+    const encodedRecipient = encodeURIComponent(formattedRecipient);
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedContent = encodeURIComponent(content);
+
+    // Construct the mailto link
+    let mailtoLink = `mailto:${encodedRecipient}?subject=${encodedSubject}&body=${encodedContent}`;
+    console.log("Sending email via: " + mailtoLink);
+
+    // Open the email client (this may vary based on browser/client)
+    window.location.href = mailtoLink;
+}
+
+
+
+// Control volume function
+async function controlVolume(volumeLevel) {
+    try {
+        const response = await fetch('http://localhost:3000/control-volume', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ volume: volumeLevel }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to control volume: ' + response.statusText);
+        }
+
+        const data = await response.json();
+        if (data.status === 'success') {
+            console.log(data.message); // Log success message
+            speakText(data.message);   // Speak the server's response for smooth feedback
+        } else {
+            console.error(data.message); // Log error message
+            speakText(data.message);     // Speak error feedback
+        }
+    } catch (error) {
+        console.error('Error controlling volume:', error);
+        speakText("Error controlling volume."); // Inform the user via TTS
+    }
+}
+
+
+
+
+
+
+// File/Directory operations
+async function createFile(fileName) {
+    try {
+        const response = await fetch('http://localhost:3000/create-file', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fileName })
+        });
+        const data = await response.json();
+        if (data.status === 'success') {
+            speakText(`File '${fileName}' created successfully.`);
+        } else {
+            speakText(`Failed to create file '${fileName}'.`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        speakText("Error creating the file.");
+    }
+}
+
+async function deleteFile(fileName) {
+    try {
+        const response = await fetch('http://localhost:3000/delete-file', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fileName })
+        });
+        const data = await response.json();
+        if (data.status === 'success') {
+            speakText(`File '${fileName}' deleted successfully.`);
+        } else {
+            speakText(`Failed to delete file '${fileName}'.`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        speakText("Error deleting the file.");
+    }
+}
+
+async function findFile(fileName) {
+    try {
+        const response = await fetch('http://localhost:3000/find-file', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fileName })
+        });
+        const data = await response.json();
+        if (data.status === 'success') {
+            speakText(`File '${fileName}' found at ${data.path}`);
+        } else {
+            speakText(`File '${fileName}' not found.`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        speakText("Error finding the file.");
+    }
+}
+
+async function copyFile(source, destination) {
+    try {
+        const response = await fetch('http://localhost:3000/copy-file', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ source, destination })
+        });
+        const data = await response.json();
+        if (data.status === 'success') {
+            speakText(`File copied from '${source}' to '${destination}'.`);
+        } else {
+            speakText(`Failed to copy file from '${source}' to '${destination}'.`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        speakText("Error copying the file.");
+    }
+}
+
+async function openPath(path) {
+    try {
+        const response = await fetch('http://localhost:3000/open-path', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ path })
+        });
+        const data = await response.json();
+        if (data.status === 'success') {
+            speakText(`Opened file or directory at ${path}.`);
+        } else {
+            speakText(`Failed to open file or directory at ${path}.`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        speakText("Error opening the path.");
+    }
+}
+
+// Function to take a screenshot and save to the current directory
+async function takeScreenshot() {
+    try {
+        const response = await fetch('http://localhost:3000/take-screenshot', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data.message);  // Logs: "Screenshot taken successfully"
+        
+        // Call TTS to announce the result
+        speakText(data.message);  // Speak the success message via TTS
+    } catch (error) {
+        console.error("Error taking screenshot:", error);
+        speakText("Sorry, there was an error taking the screenshot."); // Handle error with TTS
+    }
+}
+
+
+
+async function launchApplication(appName) {
+    speakText(`Launching ${appName}.`); // Speak immediately before fetch
+
+    try {
+        const response = await fetch('http://localhost:3000/launch-application', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ appName })
+        });
+
+        const data = await response.json();
+        if (data.message) {
+            console.log(data.message);  // Log success
+            speakText(data.message);    // Confirm launch result
+        } else if (data.error) {
+            console.error("Backend error:", data.error);  // Log only
+        }
+    } catch (error) {
+        console.error("Error launching application:", error);  // Log only
+    }
+}
+
+
+async function closeApplication(appName) {
+    speakText(`Closing ${appName}.`); // Speak immediately before fetch
+
+    try {
+        const response = await fetch('http://localhost:3000/close-application', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ appName })
+        });
+
+        const data = await response.json();
+        if (data.message) {
+            console.log(data.message);  // Log success
+            speakText(data.message);    // Confirm close result
+        } else if (data.error) {
+            console.error("Backend error:", data.error);  // Log only
+        }
+    } catch (error) {
+        console.error("Error closing application:", error);  // Log only
+    }
+}
+
+
+
+// Shutdown system
+async function shutdownSystem() {
+    try {
+        const response = await fetch('http://localhost:3000/shutdown', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const data = await response.json();
+        console.log(data.message);
+    } catch (error) {
+        console.error('Error shutting down system:', error);
+    }
+}
+
+// Reboot system
+async function rebootSystem() {
+    try {
+        const response = await fetch('http://localhost:3000/reboot', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const data = await response.json();
+        console.log(data.message);
+    } catch (error) {
+        console.error('Error rebooting system:', error);
+    }
+}
+
+// Lock screen
+async function lockScreen() {
+    try {
+        const response = await fetch('http://localhost:3000/lock-screen', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const data = await response.json();
+        console.log(data.message);
+    } catch (error) {
+        console.error('Error locking screen:', error);
+    }
+}
+
+////////////////////// CHAT MODE //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Function to stop chat mode
+function stopChatMode() {
+    console.log("Chat mode stopped. Returning to wake word detection...");
+    chatModeActive = false; // Disable chat mode
+
+    // Stop recognition safely before starting it again
+    if (recognizing && !isRecognitionActive) {
+        recognition.stop(); // Stop recognition
+        isRecognitionActive = false; // Set the flag indicating that recognition is not active
+    }
+
+    // After stopping, wait for a brief moment to ensure it's fully stopped before restarting
+    setTimeout(() => {
+        // Start recognition again for wake word detection
+        if (!isRecognitionActive) {
+            safeStartRecognition();
+            isRecognitionActive = true; // Set the flag to indicate recognition is active
+        }
+    }, 500); // You can adjust this timeout if needed
+}
+
+// Function to start chat mode
+function startChatMode() {
+    console.log("Chat mode started.");
+    chatModeActive = true; // Enable chat mode
+
+    // Stop recognition safely before starting it again
+    if (recognizing && !isRecognitionActive) {
+        recognition.stop(); // Stop recognition
+        isRecognitionActive = false; // Set the flag indicating that recognition is not active
+    }
+
+    // After stopping, wait for a brief moment to ensure it's fully stopped before restarting
+    setTimeout(() => {
+        // Start recognition for chat mode
+        if (!isRecognitionActive) {
+            safeStartRecognition(); 
+            isRecognitionActive = true; // Set the flag to indicate recognition is active
+        }
+    }, 500); // You can adjust this timeout if needed
+}
+
+
+
+// Update System
+async function runSystemCommand(action) {
+    try {
+        // Announce the start
+        speakText(`Starting system ${action.replace('-', ' ')}. This might take a while. Please be patient.`);
+
+        const response = await fetch('http://localhost:3000/run-system-command', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ action }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to run system command: ${response.statusText}`);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let partial = '';
+        let spokenUpdates = 0;
+        let lastUpdateTime = Date.now();
+
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+
+            partial += decoder.decode(value);
+            let lines = partial.split('\n');
+            partial = lines.pop(); // leave last incomplete line
+
+            for (const line of lines) {
+                if (line.trim()) {
+                    console.log("Progress:", line);
+
+                    // announce progress every 20 seconds
+                    const now = Date.now();
+                    if (now - lastUpdateTime > 20000) {
+                        lastUpdateTime = now;
+                        spokenUpdates++;
+                        if (spokenUpdates === 1) {
+                            speakText(`System ${action.replace('-', ' ')} is in progress, please wait.`);
+                        } else if (spokenUpdates === 2) {
+                            speakText("Still working on it, your system is getting updated.");
+                        } else if (spokenUpdates === 3) {
+                            speakText("Almost done, just a little longer. Thank you for your patience.");
+                        }
+                    }
+                }
+            }
+        }
+
+        // Success message
+        speakText(`System ${action.replace('-', ' ')} completed successfully. Your system is now up-to-date.`);
+    } catch (error) {
+        console.error('Error running system command:', error);
+        speakText("There was an error while running the system command. Please try again.");
+    }
+}
+
+
+// 🌗 Toggle Dark / Light Mode (Backend + Frontend)
+async function toggleDarkMode(mode) {
+    // Send theme preference to the backend
+    const response = await fetch("http://localhost:3000/theme", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mode })
+    });
+
+    const result = await response.json();
+    speakText(result.message);
+
+    // Apply the theme locally on the frontend
+    const isDark = mode === "dark";
+    document.body.classList.toggle("dark-mode", isDark);
+
+    // Update the toggle switch (if it exists in DOM)
+    const toggleSwitch = document.getElementById("toggle-switch");
+    const toggleIcon = document.getElementById("toggle-icon");
+    if (toggleSwitch && toggleIcon) {
+        toggleSwitch.checked = isDark;
+        toggleIcon.textContent = isDark ? "🌙" : "🌞";
+    }
+
+    // Save to localStorage
+    localStorage.setItem("theme", mode);
+}
+
+
+
+
+
+// 🌐 Get Public IP Address
+async function getIPAddress() {
+    try {
+        const response = await fetch("http://localhost:3000/network/ip");
+        const result = await response.json();
+
+        const message = `Your IP address is ${result.ip}`;
+        displayMessage(message, 'system-message'); // or 'groq-response' if you prefer
+        speakText(message);
+    } catch (error) {
+        console.error("Failed to get IP address:", error);
+        displayMessage("Failed to retrieve your IP address.", 'system-message');
+        speakText("Sorry, I couldn't get your IP address.");
+    }
+}
+
+
+// 📅 Google Calendar Integration
+// Handle calendar actions (list, create)
+async function handleCalendarAction(action, data = null, eventId = null) {
+    try {
+        const response = await fetch('http://localhost:3000/google/calendar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action, data, eventId })
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            if (action === 'list') {
+                console.log("Upcoming Events:", result.events);
+                speakText(`You have ${result.events.length} upcoming events.`);
+                result.events.forEach(event => {
+                    const start = event.start.dateTime || event.start.date;
+                    speakText(`Event: ${event.summary} at ${new Date(start).toLocaleString()}`);
+                });
+            } else {
+                speakText(result.message);
+            }
+        } else if (result.status === 'auth_required') {
+            speakText('Authorization is needed. I am opening the link now.');
+            window.open(result.url, '_blank');
+        } else {
+            speakText(result.message || 'There was an issue handling your calendar request.');
+        }
+
+    } catch (error) {
+        console.error('Calendar API Error:', error);
+        speakText('An error occurred while trying to access the calendar.');
+    }
+}
+
+// Parse voice command to extract event details
+async function parseEventDetails(command) {
+    const normalizedCommand = command.toLowerCase();
+    const eventTitleMatch = normalizedCommand.match(/(add|create) event (.*?)( at| on| from| to|$)/i);
+
+    if (!eventTitleMatch) {
+        speakText('Sorry, I couldn\'t identify the event title.');
+        return null;
+    }
+
+    const summary = eventTitleMatch[2].trim();
+    const timeMatch = normalizedCommand.match(/(?:at|on|from|to) ([^,]+)$/i);
+
+    if (!timeMatch) {
+        speakText('Sorry, I couldn\'t understand the date or time for your event.');
+        return null;
+    }
+
+    let startDate = parseDate(timeMatch[1]);
+    if (!startDate) {
+        speakText('I could not parse the date or time correctly. Please try again.');
+        return null;
+    }
+
+    let endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Default duration: 1 hour
+
+    return {
+        summary,
+        start: startDate.toISOString(),
+        end: endDate.toISOString(),
+        location: '',
+        description: '',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    };
+}
+
+// Parse various date/time phrases
+function parseDate(dateString) {
+    const now = new Date();
+
+    if (dateString.includes('tomorrow')) {
+        const t = new Date(now);
+        t.setDate(now.getDate() + 1);
+        t.setHours(9, 0, 0, 0);
+        return t;
+    }
+
+    const weekdayMatch = dateString.match(/next (\w+)/i);
+    if (weekdayMatch) {
+        return getNextWeekday(weekdayMatch[1].toLowerCase());
+    }
+
+    let parsedDate = new Date(dateString);
+    return isNaN(parsedDate.getTime()) ? null : parsedDate;
+}
+
+// Get the date of the next specified weekday
+function getNextWeekday(weekday) {
+    const daysOfWeek = {
+        sunday: 0, monday: 1, tuesday: 2, wednesday: 3,
+        thursday: 4, friday: 5, saturday: 6
+    };
+    const now = new Date();
+    const currentDay = now.getDay();
+    const targetDay = daysOfWeek[weekday];
+    if (targetDay === undefined) return null;
+    const daysUntilNext = (targetDay - currentDay + 7) % 7 || 7;
+    const nextDate = new Date(now);
+    nextDate.setDate(now.getDate() + daysUntilNext);
+    nextDate.setHours(9, 0, 0, 0);
+    return nextDate;
+}
+
+
+function sendEmailCommand() {
+    speakText("Who do you want to send the email to?");
+    recognition.stop();
+
+    recognition.onresult = handleRecipient;
+    recognition.start();
+}
+
+function handleRecipient(event) {
+    let recipient = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+        recipient += event.results[i][0].transcript;
+    }
+    recipient = recipient.trim().replace(/\s+at\s+/i, "@").toLowerCase();
+    console.log("Recipient:", recipient);
+
+    speakText("What is the subject of the email?");
+    recognition.onresult = event => handleSubject(event, recipient);
+    recognition.stop();
+    recognition.start();
+}
+
+function handleSubject(event, recipient) {
+    let subject = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+        subject += event.results[i][0].transcript;
+    }
+    subject = subject.trim();
+    console.log("Subject:", subject);
+
+    speakText("What is the content of the email?");
+    recognition.onresult = event => handleContent(event, recipient, subject);
+    recognition.stop();
+    recognition.start();
+}
+
+function handleContent(event, recipient, subject) {
+    let content = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+        content += event.results[i][0].transcript;
+    }
+    content = content.trim();
+    console.log("Content:", content);
+
+    speakText(`Do you want me to send this email to ${recipient} with subject ${subject}? Say yes or no.`);
+    recognition.onresult = event => handleConfirmation(event, recipient, subject, content);
+    recognition.stop();
+    recognition.start();
+}
+
+function handleConfirmation(event, recipient, subject, content) {
+    let confirmation = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+        confirmation += event.results[i][0].transcript;
+    }
+    confirmation = confirmation.trim().toLowerCase();
+
+    recognition.onresult = defaultRecognitionHandler; // <--- Restore the default
+
+    recognition.stop(); // Triggers `onend`, which leads to `safeStartRecognition()`
+
+    if (confirmation.includes('yes')) {
+        fetch('http://localhost:3000/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ recipient, subject, content }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 401 || response.status === 500) {
+                    speakText("I need you to log in to your Google account. Opening the login page now.");
+                    window.open('http://localhost:3000/google/auth', '_blank');
+                }
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Email response:', data);
+            speakText(data.message || "Email sent.");
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            speakText("There was an error sending the email.");
+        });
+    } else {
+        speakText("Okay, I won't send the email.");
+    }
+}
+
+//windsurf ai
+async function sendToWindsurfAI(prompt, action) {
+    try {
+        speakText(`Processing your ${action} request...`);
+
+        const response = await fetch('http://localhost:3000/windsurf', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            speakText("Prompt sent to Windsurf.");
+        } else {
+            speakText("There was an issue sending your prompt.");
+        }
+    } catch (error) {
+        console.error("Error sending to Windsurf AI:", error);
+        speakText("There was a problem contacting Windsurf AI.");
+    }
+}
+
+//notes
+// Save a note to localStorage
+function saveNote(title, content) {
+    let notes = JSON.parse(localStorage.getItem('notes')) || {};
+    notes[title] = content;
+    localStorage.setItem('notes', JSON.stringify(notes));
+}
+
+// Load all notes from localStorage
+function loadNotes() {
+    let notes = JSON.parse(localStorage.getItem('notes')) || {};
+    for (let title in notes) {
+        displayNote(title, notes[title]);
+    }
+}
+
+// Display a note on screen
+function displayNote(title, content) {
+    const noteElement = document.createElement('div');
+    noteElement.classList.add('note');
+    noteElement.innerHTML = `<strong>${title}</strong><p>${content}</p>`;
+    chatBox.appendChild(noteElement);
+}
+
+
+
+
+
+    </script>
+</body>
+</html>
